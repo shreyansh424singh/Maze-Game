@@ -3,9 +3,7 @@
 #include<bits/stdc++.h>
 
 #include "LTexture.hpp"
-#include "server.h"
-#include "client.h"
-#include "back.h"
+#include "back1.h"
 
 using namespace std;
 
@@ -18,7 +16,7 @@ class Dot
 		static const int DOT_HEIGHT = 20;
 
 		//Maximum axis velocity of the dot
-		static const int DOT_VEL = 2;
+		static const int DOT_VEL = 1;
 
         vector<int> temp;
         int backarr[1920][1080];
@@ -31,15 +29,14 @@ class Dot
 		void handleEventN( SDL_Event& e );
 
 		//Moves the dot and checks collision
-		// void move(int SCREEN_HEIGHT, int SCREEN_WIDTH);
-		void move(int SCREEN_HEIGHT, int SCREEN_WIDTH, int usr_id, int sys_sock);
-		void move_P2(int usr_id, int sys_sock);
-		// void move_P2();
+		void move(int SCREEN_HEIGHT, int SCREEN_WIDTH);
 
 		//Shows the dot on the screen
 		void render(LTexture* gDotTexture, SDL_Renderer*& gRenderer);
 
         bool checkCollision( SDL_Rect a);
+
+		void setInitialPosition(char p);
 
     private:
 		//The X and Y offsets of the dot
