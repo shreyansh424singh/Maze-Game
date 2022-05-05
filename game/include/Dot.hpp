@@ -16,7 +16,7 @@ class Dot
 		static const int DOT_HEIGHT = 20;
 
 		//Maximum axis velocity of the dot
-		static const int DOT_VEL = 1;
+		int DOT_VEL = 1;
 
         vector<int> temp;
         int backarr[1920][1080];

@@ -6,6 +6,7 @@
 
 #include "Dot.hpp"
 #include "Music.hpp"
+#include "DynamicText.hpp"
 // #include "LTexture.hpp"
 
 #include<bits/stdc++.h>
@@ -13,7 +14,7 @@
 using namespace std;
 
 //Screen dimension constants
-const int SCREEN_WIDTH = 1600;
+const int SCREEN_WIDTH = 1850;
 const int SCREEN_HEIGHT = 1000;
 
 //flag=2 initially flag=1 after rules flag=0 after hostel selction
@@ -109,28 +110,28 @@ bool loadMedia()
 	bool success = true;
 
 	//Load press texture
-	if( !gDotTexture->loadFromFile( "./assets/dot.bmp", gRenderer ) )
+	if( !gDotTexture->loadFromFile( "./assets/Images/dot.bmp", gRenderer ) )
 	{
 		printf( "Failed to load dot texture!\n" );
 		success = false;
 	}
 	
 	//Load background texture
-	if( !gBackgroundTexture->loadFromFile( "./assets/back1.png", gRenderer ) )
+	if( !gBackgroundTexture->loadFromFile( "./assets/Images/Game_Back.png", gRenderer ) )
 	{
 		printf( "Failed to load background texture image!\n" );
 		success = false;
 	}
 
 	//Load hostel selction texture
-	if( !hostelSelection->loadFromFile( "./assets/back.png", gRenderer ) )
+	if( !hostelSelection->loadFromFile( "./assets/Images/Menu.png", gRenderer ) )
 	{
 		printf( "Failed to load background texture image!\n" );
 		success = false;
 	}
 
 	//Load main selction texture
-	if( !mainSelection->loadFromFile( "./assets/back1.png", gRenderer ) )
+	if( !mainSelection->loadFromFile( "./assets/Images/Load_Screen.png", gRenderer ) )
 	{
 		printf( "Failed to load background texture image!\n" );
 		success = false;
@@ -270,6 +271,9 @@ int main( int argc, char* args[] )
 					//Render dot
 					dot1->render(gDotTexture, gRenderer);
 					dot2->render(gDotTexture, gRenderer);
+
+					DynamicText text1("./assets/fonts/alba.ttf",32);
+					text1.DrawText(gRenderer,"Mumbo-Jumbo",0,0,200,100);
 				}
 
 				//Update screen
