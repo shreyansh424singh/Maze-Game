@@ -5,11 +5,12 @@ using namespace std;
 
 Dot::Dot()
 {
-cout<<"dotcons \n";
+//cout<<"dotcons \n";
 
     //Initialize the offsets
-    mPosX = 0;
-    mPosY = 0;
+    // setInitialPosition(p);
+    mPosX = 540;
+    mPosY = 102;
 
 	//Set collision box dimension
 	mCollider.w = DOT_WIDTH;
@@ -21,15 +22,15 @@ cout<<"dotcons \n";
 
         // vector<int> temp;
     temp = backarray;
-cout<<temp.size()<< " size\n";
-	for(int j=0; j<1080; j++)
-	    for(int i = 0; i<1920; i++)
-		    backarr[i][j] = temp[j*1920+i];
+//cout<<temp.size()<< " size\n";
+	for(int j=0; j<1000; j++)
+	    for(int i = 0; i<1600; i++)
+		    backarr[i][j] = temp[j*1600+i];
 }
 
 void Dot::handleEvent( SDL_Event& e )
 {
-cout<<"handeve \n";
+//cout<<"handeve \n";
 
     //If a key was pressed
 	if( e.type == SDL_KEYDOWN && e.key.repeat == 0 )
@@ -59,7 +60,7 @@ cout<<"handeve \n";
 
 void Dot::handleEventN( SDL_Event& e )
 {
-cout<<"handeve \n";
+//cout<<"handeve \n";
 
     //If a key was pressed
 	if( e.type == SDL_KEYDOWN && e.key.repeat == 0 )
@@ -87,9 +88,9 @@ cout<<"handeve \n";
     }
 }
 
-void Dot::move(int SCREEN_HEIGHT, int SCREEN_WIDTH, int usr_id, int sys_sock)
+void Dot::move(int SCREEN_HEIGHT, int SCREEN_WIDTH)
 {
-cout<<"mov \n";
+//cout<<"mov \n";
 
     //Move the dot left or right
     mPosX += mVelX;
@@ -114,40 +115,11 @@ cout<<"mov \n";
         mPosY -= mVelY;
 		mCollider.y = mPosY;
     }
-
-    int* locs = new int(5);
-	locs[0] = mPosX;
-	locs[1] = mPosY;
-	locs[2] = mVelX;
-	locs[3] = mVelY;
-	if(usr_id == 0) {
-		server_send_data(sys_sock, locs);
-	}
-	else {
-		client_send_data(sys_sock, locs);
-	}
 }
-
-void Dot::move_P2(int usr_id, int sys_sock)
-{
-	int* locs = new int(5);
-	if(usr_id == 0) {
-		server_recv_data(sys_sock, locs);
-	}
-	else {
-		client_recv_data(sys_sock, locs);
-	}
-
-	mPosX = locs[0];
-	mPosY = locs[1];
-	mVelX = locs[2];
-	mVelY = locs[3];
-}
-
 
 void Dot::render(LTexture* gDotTexture, SDL_Renderer*& gRenderer)
 {
-cout<<"dot render \n";
+//cout<<"dot render \n";
 
     //Show the dot
 	gDotTexture->render( mPosX, mPosY, gRenderer );
@@ -155,7 +127,7 @@ cout<<"dot render \n";
 
 bool Dot::checkCollision( SDL_Rect a)
 {
-cout<<"colli \n";
+//cout<<"colli \n";
 
     //The sides of the rectangles
     int leftA;
@@ -170,11 +142,29 @@ cout<<"colli \n";
     topA = a.y;
     bottomA = a.y + a.h;
 
-    midX = min((leftA + rightA)/2, 1919);
-    midY = min((topA + bottomA)/2, 1079);
+    midX = min((leftA + rightA)/2, 1599);
+    midY = min((topA + bottomA)/2, 999);
 
-// cout<<"midx  " << midX << "   midy   "<<midY<< " value "<<backarr[midX][midY]<<"\n";
+// //cout<<"midx  " << midX << "   midy   "<<midY<< " value "<<backarr[midX][midY]<<"\n";
 
     if(backarr[midX][midY] == 1) return true;
     return false;
+}
+
+void Dot::setInitialPosition(char p){
+    switch(p){
+        case 'J': mPosX = 152; mPosY = 42; break;
+        case 'M': mPosX = 230; mPosY = 70; break;
+        case 'A': mPosX = 140; mPosY = 164; break;
+        case 'K': mPosX = 120; mPosY = 302; break;
+        case 'N': mPosX = 113; mPosY = 426; break;
+        case 'V': mPosX = 318; mPosY = 69; break;
+        case 'S': mPosX = 340; mPosY = 227; break;
+        case 'Z': mPosX = 343; mPosY = 301; break;
+        case 'T': mPosX = 453; mPosY = 72; break;
+        case 'G': mPosX = 540; mPosY = 102; break;
+        case 'U': mPosX = 572; mPosY = 70; break;
+        case 'L': mPosX = 1216; mPosY = 174; break;
+        case 'H': mPosX = 1255; mPosY = 66; break;
+    }
 }
