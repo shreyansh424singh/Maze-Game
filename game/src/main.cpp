@@ -5,20 +5,24 @@
 #include <iostream>
 
 #include "Dot.hpp"
+#include "Music.hpp"
 // #include "LTexture.hpp"
 
 #include<bits/stdc++.h>
 
 using namespace std;
 
-int usr_id, msock;
-
 //Screen dimension constants
-const int SCREEN_WIDTH = 1920/2;
-const int SCREEN_HEIGHT = 1080/2;
+const int SCREEN_WIDTH = 1600;
+const int SCREEN_HEIGHT = 1000;
+
+//flag=2 initially flag=1 after rules flag=0 after hostel selction
+int flag = 2;
 
 Dot* dot1;
 Dot* dot2;
+
+Music* MainMusicTrack;
 
 //Starts up SDL and creates window
 bool init();
@@ -41,6 +45,8 @@ SDL_Renderer* gRenderer = NULL;
 //Scene textures
 LTexture* gDotTexture;
 LTexture* gBackgroundTexture;
+LTexture* hostelSelection;
+LTexture* mainSelection;
 
 
 bool init()
@@ -110,7 +116,21 @@ bool loadMedia()
 	}
 	
 	//Load background texture
-	if( !gBackgroundTexture->loadFromFile( "./assets/back.png", gRenderer ) )
+	if( !gBackgroundTexture->loadFromFile( "./assets/back1.png", gRenderer ) )
+	{
+		printf( "Failed to load background texture image!\n" );
+		success = false;
+	}
+
+	//Load hostel selction texture
+	if( !hostelSelection->loadFromFile( "./assets/back.png", gRenderer ) )
+	{
+		printf( "Failed to load background texture image!\n" );
+		success = false;
+	}
+
+	//Load main selction texture
+	if( !mainSelection->loadFromFile( "./assets/back1.png", gRenderer ) )
 	{
 		printf( "Failed to load background texture image!\n" );
 		success = false;
@@ -119,11 +139,42 @@ bool loadMedia()
 	return success;
 }
 
+void mainEvent(SDL_Event& e){
+	if(flag!=2) return;
+	if( e.type == SDL_KEYDOWN)
+		if(e.key.keysym.sym == SDLK_RETURN)
+			flag=1;
+}
+
+void hostelEvent(SDL_Event& e){
+	if(flag!=1) return;
+	if( e.type == SDL_KEYDOWN ){
+		switch( e.key.keysym.sym )
+        {
+            case SDLK_j: dot1->setInitialPosition('J'); flag=0; break;
+            case SDLK_m: dot1->setInitialPosition('M'); flag=0; break;
+            case SDLK_a: dot1->setInitialPosition('A'); flag=0; break;
+            case SDLK_k: dot1->setInitialPosition('K'); flag=0; break;
+            case SDLK_n: dot1->setInitialPosition('N'); flag=0; break;
+            case SDLK_v: dot1->setInitialPosition('V'); flag=0; break;
+            case SDLK_s: dot1->setInitialPosition('S'); flag=0; break;
+            case SDLK_z: dot1->setInitialPosition('Z'); flag=0; break;
+            case SDLK_t: dot1->setInitialPosition('T'); flag=0; break;
+            case SDLK_g: dot1->setInitialPosition('G'); flag=0; break;
+            case SDLK_u: dot1->setInitialPosition('U'); flag=0; break;
+            case SDLK_l: dot1->setInitialPosition('L'); flag=0; break;
+            case SDLK_h: dot1->setInitialPosition('H'); flag=0; break;
+        }
+	}
+}
+
 void close()
 {
 	//Free loaded images
 	gDotTexture->free();
     gBackgroundTexture->free();
+    hostelSelection->free();
+    mainSelection->free();
 
 	//Destroy window	
 	SDL_DestroyRenderer( gRenderer );
@@ -139,40 +190,34 @@ void close()
 	delete dot1;
 	delete gDotTexture;
 	delete gBackgroundTexture;
+	delete hostelSelection;
+	delete mainSelection;
 }
 
 int main( int argc, char* args[] )
 {
-	std::cout<<"Enter 0 for Server, 1 for client: \n";
-	std::cin>>usr_id;
-	if(usr_id == 0) {
-		msock = connect_server();
-	}
-	else {
-		string s;
-		std::cout<<"Enter ip of server: \n";
-		std::cin>>s;
-		char* char_arr;
-		char_arr = &s[0];
-		msock = connect_client(char_arr);
-	}
-cout<<"main hello \n";
+////cout<<"main hello \n";
 
-dot1 = new Dot();
-dot2 = new Dot();
+	dot1 = new Dot();
+	dot2 = new Dot();
 
-gBackgroundTexture = new LTexture();
-gDotTexture = new LTexture();
+	MainMusicTrack = new Music("./assets/backsound1.mp3");
+	MainMusicTrack->PlayMusic(-1);
+
+	gBackgroundTexture = new LTexture();
+	gDotTexture = new LTexture();
+	hostelSelection = new LTexture();
+	mainSelection = new LTexture();
 
 	//Start up SDL and create window
 	if( !init() )
 	{
-cout<<"if m hu\n";
+////cout<<"if m hu\n";
 		printf( "Failed to initialize!\n" );
 	}
 	else
 	{
-cout<<"else m hu\n";
+////cout<<"else m hu\n";
 		//Load media
 		if( !loadMedia() )
 		{
@@ -186,43 +231,63 @@ cout<<"else m hu\n";
 			//Event handler
 			SDL_Event e;
 
-cout<<"refer\n";
-
 			//The dot that will be moving around on the screen
 			//While application is running
-			while( !quit )
-			{
+			while( !quit ){
 				//Handle events on queue
-				while( SDL_PollEvent( &e ) != 0 )
-				{
-					//User requests quit
-					if( e.type == SDL_QUIT )
-					{
-						quit = true;
-					}
+				// while( SDL_PollEvent( &e ) != 0 ){
+				// 	//User requests quit
+				// 	if( e.type == SDL_QUIT )
+				// 		quit = true;
 
-					//Handle input for the dot
-					dot1->handleEvent( e );
-					// dot2->handleEventN( e );
-				}
+				// 	hostelEvent(e);
+
+				// 	//Handle input for the dot
+				// 	dot1->handleEvent( e );
+				// 	dot2->handleEventN( e );
+				// }
 
 				//Move the dot and check collision
-				dot1->move(SCREEN_HEIGHT, SCREEN_WIDTH, usr_id, msock);
-				dot2->move_P2(usr_id, msock);
+				dot1->move(SCREEN_HEIGHT, SCREEN_WIDTH);
+				dot2->move(SCREEN_HEIGHT, SCREEN_WIDTH);
 
 				//Clear screen
 				SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
 				SDL_RenderClear( gRenderer );
 
-				//Render background texture to screen
-				gBackgroundTexture->render( 0, 0, gRenderer);
+				if(flag == 2){
+					mainSelection->render( 0, 0, gRenderer);
+				}
 
-				//Render dot
-				dot1->render(gDotTexture, gRenderer);
-				dot2->render(gDotTexture, gRenderer);
+				if(flag == 1){
+					hostelSelection->render( 0, 0, gRenderer);
+				}
+
+				if(flag == 0){
+					//Render background texture to screen
+					gBackgroundTexture->render( 0, 0, gRenderer);
+	
+					//Render dot
+					dot1->render(gDotTexture, gRenderer);
+					dot2->render(gDotTexture, gRenderer);
+				}
 
 				//Update screen
 				SDL_RenderPresent( gRenderer );
+
+				while( SDL_PollEvent( &e ) != 0 ){
+					//User requests quit
+					if( e.type == SDL_QUIT )
+						quit = true;
+
+					mainEvent(e);
+
+					hostelEvent(e);
+
+					//Handle input for the dot
+					dot1->handleEvent( e );
+					dot2->handleEventN( e );
+				}
 			}
 		}
 	}
