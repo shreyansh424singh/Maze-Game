@@ -261,7 +261,7 @@ void Dot::setInitialPosition(char p){
 }
 
 bool Dot::checkDestReached(){
-    if(abs(mDestX-mPosX) <= 10 && abs(mDestY-mPosY) <= 10){
+    if(abs(mDestX-mPosX) <= 15 && abs(mDestY-mPosY) <= 15){
 
 //play sound
 //add bonus points
@@ -271,8 +271,3 @@ bool Dot::checkDestReached(){
     }
     return false;
 }
-
-// void Dot::resetVel(){
-//     mVelX = 1;
-//     mVelY = 1;
-// }

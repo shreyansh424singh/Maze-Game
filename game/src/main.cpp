@@ -66,9 +66,13 @@ SDL_Renderer* gRenderer = NULL;
 
 //Scene textures
 LTexture* gDotTexture;
+LTexture* gDotTexture1;
 LTexture* gBackgroundTexture;
 LTexture* hostelSelection;
 LTexture* mainSelection;
+LTexture* intervalScreen;
+LTexture* wonScreen;
+LTexture* lostScreen;
 
 
 bool init()
@@ -123,7 +127,13 @@ bool loadMedia()
 	bool success = true;
 
 	//Load press texture
-	if( !gDotTexture->loadFromFile( "./assets/Images/dot.bmp", gRenderer ) ){
+	if( !gDotTexture->loadFromFile( "./assets/Images/Dot0.png", gRenderer ) ){
+		printf( "Failed to load dot texture!\n" );
+		success = false;
+	}
+
+	//Load press texture
+	if( !gDotTexture1->loadFromFile( "./assets/Images/Dot1.png", gRenderer ) ){
 		printf( "Failed to load dot texture!\n" );
 		success = false;
 	}
@@ -142,6 +152,24 @@ bool loadMedia()
 
 	//Load main selction texture
 	if( !mainSelection->loadFromFile( "./assets/Images/Load_Screen.png", gRenderer ) ){
+		printf( "Failed to load background texture image!\n" );
+		success = false;
+	}
+
+	//Load interval texture
+	if( !intervalScreen->loadFromFile( "./assets/Images/Load_Screen.png", gRenderer ) ){
+		printf( "Failed to load background texture image!\n" );
+		success = false;
+	}
+
+	//Load won texture
+	if( !wonScreen->loadFromFile( "./assets/Images/Load_Screen.png", gRenderer ) ){
+		printf( "Failed to load background texture image!\n" );
+		success = false;
+	}
+
+	//Load lost texture
+	if( !lostScreen->loadFromFile( "./assets/Images/Load_Screen.png", gRenderer ) ){
 		printf( "Failed to load background texture image!\n" );
 		success = false;
 	}
@@ -197,7 +225,7 @@ void doRender(){
 
 		//Render dot
 		dot1->render(gDotTexture, gRenderer);
-		dot2->render(gDotTexture, gRenderer);
+		dot2->render(gDotTexture1, gRenderer);
 
 		//Render Text
 		DynamicText text("./assets/fonts/alba.ttf",32);
@@ -224,7 +252,7 @@ void assign(){
 	locations["Kumaon			 "] = make_pair(228, 81);
 	locations["Aravali			 "] = make_pair(151, 178);
 	locations["Delhi 16			 "] = make_pair(213, 203);
-	locations["Karakoram		 "] = make_pair(135, 316);
+	locations["Karakoram		 "] = make_pair(135, 311);
 	locations["Nilgiri			 "] = make_pair(128, 439);
 	locations["Safal			 "] = make_pair(120, 602);
 	locations["DMS				 "] = make_pair(227, 891);
@@ -274,9 +302,13 @@ void close()
 {
 	//Free loaded images
 	gDotTexture->free();
+	gDotTexture1->free();
     gBackgroundTexture->free();
     hostelSelection->free();
     mainSelection->free();
+	intervalScreen->free();
+	wonScreen->free();
+	lostScreen->free();
 
 	//Destroy window	
 	SDL_DestroyRenderer( gRenderer );
@@ -291,9 +323,13 @@ void close()
 	delete dot1;
 	delete dot1;
 	delete gDotTexture;
+	delete gDotTexture1;
 	delete gBackgroundTexture;
 	delete hostelSelection;
 	delete mainSelection;
+	delete intervalScreen;
+	delete lostScreen;
+	delete wonScreen;
 	delete MainMusicTrack;
 
 	close(msock);
@@ -327,8 +363,12 @@ int main( int argc, char* args[] ){
 
 	gBackgroundTexture = new LTexture();
 	gDotTexture = new LTexture();
+	gDotTexture1 = new LTexture();
 	hostelSelection = new LTexture();
 	mainSelection = new LTexture();
+	intervalScreen = new LTexture();
+	lostScreen = new LTexture();
+	wonScreen = new LTexture();
 
 	//Start up SDL and create window
 	if( !init() )
@@ -356,8 +396,16 @@ int main( int argc, char* args[] ){
 			//While application is running
 			while( !quit ){
 
-				if(dot2->mScore < 1) {cout<<"You Won"; break;}
-				if(dot1->mScore < 1) {cout<<"You Lost"; break;}
+				if(dot2->mScore < 1) {
+					wonScreen->render( 0, 0, gRenderer);
+					SDL_Delay(5000);
+					break;
+				}
+				if(dot1->mScore < 1) {
+					lostScreen->render( 0, 0, gRenderer);
+					SDL_Delay(5000);
+					break;
+				}
 				
 				dot1->move(SCREEN_HEIGHT, SCREEN_WIDTH, usr_id, msock);
 				dot2->move_P2(usr_id, msock);
@@ -375,8 +423,11 @@ int main( int argc, char* args[] ){
 
 					if(dot1->mDestReached == 1 && dot2->mDestReached == 1){
 
+						intervalScreen->render( 0, 0, gRenderer);
 	//add delay and some music/image
 						SDL_Delay(5000);
+						// intervalScreen->free();
+
 
 						dot1->mDestReached = 0;
 						// dot2->mDestReached = 0;
