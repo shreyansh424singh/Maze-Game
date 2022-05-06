@@ -5,6 +5,7 @@ using namespace std;
 
 Dot::Dot()
 {
+//cout<<"dotcons \n";
 
     //Initialize the offsets
     // setInitialPosition(p);
@@ -17,6 +18,7 @@ Dot::Dot()
     mYulu = 3;
 
     mDestReached = 0;
+    mYOn = 0;
     mDestX = 346;
     mDestY = 411;
 
@@ -30,6 +32,7 @@ Dot::Dot()
 
         // vector<int> temp;
     temp = backarray;
+//cout<<temp.size()<< " size\n";
 	for(int j=0; j<1000; j++)
 	    for(int i = 0; i<1600; i++)
 		    backarr[i][j] = temp[j*1600+i];
@@ -37,6 +40,16 @@ Dot::Dot()
 
 void Dot::handleEvent( SDL_Event& e )
 {
+//cout<<"handeve \n";
+
+    if( e.type == SDL_KEYDOWN && mYulu > 0){
+		if( e.key.keysym.sym == SDLK_y){
+            mYOn = 1;
+            mVelX = 2;
+            mVelY = 2;
+            mYulu--;
+        }
+    }
 
     //If a key was pressed
 	if( e.type == SDL_KEYDOWN && e.key.repeat == 0 )
@@ -66,6 +79,7 @@ void Dot::handleEvent( SDL_Event& e )
 
 void Dot::handleEventN( SDL_Event& e )
 {
+//cout<<"handeve \n";
 
     //If a key was pressed
 	if( e.type == SDL_KEYDOWN && e.key.repeat == 0 )
@@ -95,6 +109,7 @@ void Dot::handleEventN( SDL_Event& e )
 
 void Dot::move(int SCREEN_HEIGHT, int SCREEN_WIDTH, int usr_id, int sys_sock)
 {
+//cout<<"mov \n";
 
     //Move the dot left or right
     mPosX += mVelX;
@@ -196,6 +211,7 @@ void Dot::sendPos(int usr_id, int sys_sock)
 
 void Dot::render(LTexture* gDotTexture, SDL_Renderer*& gRenderer)
 {
+//cout<<"dot render \n";
 
     //Show the dot
 	gDotTexture->render( mPosX, mPosY, gRenderer );
@@ -203,6 +219,7 @@ void Dot::render(LTexture* gDotTexture, SDL_Renderer*& gRenderer)
 
 bool Dot::checkCollision( SDL_Rect a)
 {
+//cout<<"colli \n";
 
     //The sides of the rectangles
     int leftA;
@@ -220,7 +237,8 @@ bool Dot::checkCollision( SDL_Rect a)
     midX = min((leftA + rightA)/2, 1599);
     midY = min((topA + bottomA)/2, 999);
 
-// 
+// //cout<<"midx  " << midX << "   midy   "<<midY<< " value "<<backarr[midX][midY]<<"\n";
+
     if(backarr[midX][midY] == 1) return true;
     return false;
 }
@@ -253,4 +271,9 @@ bool Dot::checkDestReached(){
         return true;
     }
     return false;
+}
+
+void Dot::resetVel(){
+    mVelX = 1;
+    mVelY = 1;
 }

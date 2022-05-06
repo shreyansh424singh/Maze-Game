@@ -202,7 +202,7 @@ void doRender(){
 		//Render Text
 		DynamicText text("./assets/fonts/alba.ttf",32);
 		
-		if(!dot1->checkDestReached())  text.DrawText(gRenderer,"Yulu Activated",575,632,240,100);
+		if(!dot1->mYOn == 1)  text.DrawText(gRenderer,"Yulu Activated",575,632,240,100);
 		text.DrawText(gRenderer,"Destination : ",575,702,200,100);
 		text.DrawText(gRenderer,places[r1],780,702,300,100);
 		text.DrawText(gRenderer,"Time : ",575,772,150,100);
@@ -257,15 +257,16 @@ void assign(){
 
 void randomLocation(){
 	r1 = rand()%33;
-	// int r2 = rand()%33;
+
+	//new destination should not be same as old destination
+	if(dot1->mDestX == locations[places[r1]].first && dot1->mDestY == locations[places[r1]].second) r1 = (r1*2)%33;
 
 	dot1->mDestX = locations[places[r1]].first;
 	dot1->mDestY = locations[places[r1]].second;
 
-	// dot2->mDestX = locations[places[r2]].first;
-	// dot2->mDestY = locations[places[r2]].second;
-
 	c1=c2=0;
+
+	dot1->mYOn = 0;
 }
 
 void close()
@@ -354,6 +355,8 @@ int main( int argc, char* args[] ){
 			//While application is running
 			while( !quit ){
 
+				if(dot1->mScore < 1) {cout<<"Player2 Wins"; break;}
+				if(dot2->mScore < 1) {cout<<"Player1 Wins"; break;}
 				
 				dot1->move(SCREEN_HEIGHT, SCREEN_WIDTH, usr_id, msock);
 				dot2->move_P2(usr_id, msock);
