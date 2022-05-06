@@ -17,7 +17,39 @@ int usr_id, msock;
 int c1, c2, r1;
 
 map<string, pair<int, int>> locations;
-string places[33] = {"Jwalamukhi		 ", "Kumaon			 ", "Aravali			 ", "Delhi 16			 ", "Karakoram		 ", "Nilgiri			 ", "Safal			 ", "DMS				 ", "Nalanda			 ", "SAC				 ", "Zanskar			 ", "Tennis			 ", "Shivalik			 ", "Volleyball		 ", "Vindhaychal		 ", "Satpura			 ", "Girnar			 ", "Udiagiri			 ", "Parking			 ", "Hospital			 ", "Playground		 ", "Bharti Building	 ", "Staff Canteen	 ", "Library			 ", "Dogra Hall		 ", "Blocks			 ", "Central Workshop  ", "LHC				 ", "Textile Department", "Himadri			 ", "Kailash			 ", "Guest House		 ", "Main Market		 "};
+string places[33] = {	"Jwalamukhi        ",
+						"Kumaon            ",
+						"Aravali           ",
+						"Delhi 16          ",
+						"Karakoram         ",
+						"Nilgiri           ",
+						"Safal             ",
+						"DMS               ",
+						"Nalanda           ",
+						"SAC               ",
+						"Zanskar           ", 
+						"Tennis            ",
+						"Shivalik          ",
+						"Volleyball        ",
+						"Vindhaychal       ",
+						"Satpura           ",
+						"Girnar            ",
+						"Udiagiri          ",
+						"Parking           ",
+						"Hospital          ",
+						"Playground        ",
+						"Bharti Building   ",
+						"Staff Canteen     ",
+						"Library           ",
+						"Dogra Hall        ",
+						"Blocks            ",
+						"Central Workshop  ",
+						"LHC               ",
+						"Textile Department",
+						"Himadri           ",
+						"Kailash           ",
+						"Guest House       ",
+						"Main Market       "};
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 1850;
@@ -248,39 +280,39 @@ void doRender(){
 }
 
 void assign(){
-	locations["Jwalamukhi		 "] = make_pair(171, 55);
-	locations["Kumaon			 "] = make_pair(228, 81);
-	locations["Aravali			 "] = make_pair(151, 178);
-	locations["Delhi 16			 "] = make_pair(213, 203);
-	locations["Karakoram		 "] = make_pair(135, 311);
-	locations["Nilgiri			 "] = make_pair(128, 439);
-	locations["Safal			 "] = make_pair(120, 602);
-	locations["DMS				 "] = make_pair(227, 891);
-	locations["Nalanda			 "] = make_pair(244, 512);
-	locations["SAC				 "] = make_pair(346, 411);
-	locations["Zanskar			 "] = make_pair(349, 314);
-	locations["Tennis			 "] = make_pair(287, 259);
-	locations["Shivalik			 "] = make_pair(334, 241);
-	locations["Volleyball		 "] = make_pair(274, 179);
-	locations["Vindhaychal		 "] = make_pair(324, 89);
-	locations["Satpura			 "] = make_pair(464, 85);
-	locations["Girnar			 "] = make_pair(551, 117);
-	locations["Udiagiri			 "] = make_pair(575, 75);
-	locations["Parking			 "] = make_pair(481, 461);
-	locations["Hospital			 "] = make_pair(563, 345);
-	locations["Playground		 "] = make_pair(679, 472);
-	locations["Bharti Building	 "] = make_pair(741, 351);
-	locations["Staff Canteen	 "] = make_pair(832, 496);
-	locations["Library			 "] = make_pair(858, 350);
-	locations["Dogra Hall		 "] = make_pair(881, 324);
-	locations["Blocks			 "] = make_pair(864, 220);
+	locations["Jwalamukhi        "] = make_pair(171, 55);
+	locations["Kumaon            "] = make_pair(228, 81);
+	locations["Aravali           "] = make_pair(151, 178);
+	locations["Delhi 16          "] = make_pair(213, 203);
+	locations["Karakoram         "] = make_pair(135, 311);
+	locations["Nilgiri           "] = make_pair(128, 439);
+	locations["Safal             "] = make_pair(120, 602);
+	locations["DMS               "] = make_pair(227, 891);
+	locations["Nalanda           "] = make_pair(244, 512);
+	locations["SAC               "] = make_pair(346, 411);
+	locations["Zanskar           "] = make_pair(349, 314);
+	locations["Tennis            "] = make_pair(287, 259);
+	locations["Shivalik          "] = make_pair(334, 241);
+	locations["Volleyball        "] = make_pair(274, 179);
+	locations["Vindhaychal       "] = make_pair(324, 89);
+	locations["Satpura           "] = make_pair(464, 85);
+	locations["Girnar            "] = make_pair(551, 117);
+	locations["Udiagiri          "] = make_pair(575, 75);
+	locations["Parking           "] = make_pair(481, 461);
+	locations["Hospital          "] = make_pair(563, 345);
+	locations["Playground        "] = make_pair(679, 472);
+	locations["Bharti Building   "] = make_pair(741, 351);
+	locations["Staff Canteen     "] = make_pair(832, 496);
+	locations["Library           "] = make_pair(858, 350);
+	locations["Dogra Hall        "] = make_pair(881, 324);
+	locations["Blocks            "] = make_pair(864, 220);
 	locations["Central Workshop  "] = make_pair(945, 442);
-	locations["LHC				 "] = make_pair(1016, 44);
+	locations["LHC               "] = make_pair(1016, 44);
 	locations["Textile Department"] = make_pair(1026, 315);
-	locations["Himadri			 "] = make_pair(1274, 94);
-	locations["Kailash			 "] = make_pair(1226, 188);
-	locations["Guest House		 "] = make_pair(1402, 196);
-	locations["Main Market		 "] = make_pair(1423, 372);
+	locations["Himadri           "] = make_pair(1274, 94);
+	locations["Kailash           "] = make_pair(1226, 188);
+	locations["Guest House       "] = make_pair(1402, 196);
+	locations["Main Market       "] = make_pair(1423, 372);
 }
 
 void randomLocation(){
