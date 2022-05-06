@@ -3,10 +3,7 @@
 
 using namespace std;
 
-Dot::Dot()
-{
-//cout<<"dotcons \n";
-
+Dot::Dot(){
     //Initialize the offsets
     // setInitialPosition(p);
     ready = 0;
@@ -30,17 +27,13 @@ Dot::Dot()
     mVelX = 0;
     mVelY = 0;
 
-        // vector<int> temp;
     temp = backarray;
-//cout<<temp.size()<< " size\n";
 	for(int j=0; j<1000; j++)
 	    for(int i = 0; i<1600; i++)
 		    backarr[i][j] = temp[j*1600+i];
 }
 
-void Dot::handleEvent( SDL_Event& e )
-{
-//cout<<"handeve \n";
+void Dot::handleEvent( SDL_Event& e ){
 
     if( e.type == SDL_KEYDOWN && mYulu > 0){
 		if( e.key.keysym.sym == SDLK_y){
@@ -76,9 +69,7 @@ void Dot::handleEvent( SDL_Event& e )
     }
 }
 
-void Dot::handleEventN( SDL_Event& e )
-{
-//cout<<"handeve \n";
+void Dot::handleEventN( SDL_Event& e ){
 
     //If a key was pressed
 	if( e.type == SDL_KEYDOWN && e.key.repeat == 0 )
@@ -106,9 +97,7 @@ void Dot::handleEventN( SDL_Event& e )
     }
 }
 
-void Dot::move(int SCREEN_HEIGHT, int SCREEN_WIDTH, int usr_id, int sys_sock)
-{
-//cout<<"mov \n";
+void Dot::move(int SCREEN_HEIGHT, int SCREEN_WIDTH, int usr_id, int sys_sock){
 
     //Move the dot left or right
     mPosX += mVelX;
@@ -164,8 +153,8 @@ void Dot::move_P2(int usr_id, int sys_sock)
     ready = locs[4];
 }
 
-void Dot::getPos(int usr_id, int sys_sock)
-{
+void Dot::getPos(int usr_id, int sys_sock){
+
 	int* locs = new int(5);
 	if(usr_id == 0) {
 		server_recv_data(sys_sock, locs);
@@ -179,10 +168,6 @@ void Dot::getPos(int usr_id, int sys_sock)
     mDestReached = locs[2];
 	mScore = locs[3];
     ready = locs[4];
-
-	// mVelX = locs[2];
-	// mVelY = locs[3];
-    // mScore = locs[4];
 }
 
 
@@ -195,9 +180,6 @@ void Dot::sendPos(int usr_id, int sys_sock)
 	locs[3] = mScore;
     locs[4] = ready;
 
-	// locs[2] = mVelX;
-	// locs[3] = mVelY;
-    // locs[4] = mScore;
 	if(usr_id == 0) {
 		server_send_data(sys_sock, locs);
 	}
@@ -208,17 +190,12 @@ void Dot::sendPos(int usr_id, int sys_sock)
 
 
 
-void Dot::render(LTexture* gDotTexture, SDL_Renderer*& gRenderer)
-{
-//cout<<"dot render \n";
-
+void Dot::render(LTexture* gDotTexture, SDL_Renderer*& gRenderer){
     //Show the dot
 	gDotTexture->render( mPosX, mPosY, gRenderer );
 }
 
-bool Dot::checkCollision( SDL_Rect a)
-{
-//cout<<"colli \n";
+bool Dot::checkCollision( SDL_Rect a){
 
     //The sides of the rectangles
     int leftA;
@@ -235,8 +212,6 @@ bool Dot::checkCollision( SDL_Rect a)
 
     midX = min((leftA + rightA)/2, 1599);
     midY = min((topA + bottomA)/2, 999);
-
-// //cout<<"midx  " << midX << "   midy   "<<midY<< " value "<<backarr[midX][midY]<<"\n";
 
     if(backarr[midX][midY] == 1) return true;
     return false;
