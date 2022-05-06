@@ -202,7 +202,7 @@ void doRender(){
 		//Render Text
 		DynamicText text("./assets/fonts/alba.ttf",32);
 		
-		if(!dot1->mYOn == 1)  text.DrawText(gRenderer,"Yulu Activated",575,632,240,100);
+		if(dot1->mYOn == 1)  text.DrawText(gRenderer,"Yulu Activated",575,632,240,100);
 		text.DrawText(gRenderer,"Destination : ",575,702,200,100);
 		text.DrawText(gRenderer,places[r1],780,702,300,100);
 		text.DrawText(gRenderer,"Time : ",575,772,150,100);
@@ -267,7 +267,7 @@ void randomLocation(){
 	c1=c2=0;
 
 	dot1->mYOn = 0;
-	dot1->resetVel();
+	dot1->DOT_VEL = 1;
 }
 
 void close()

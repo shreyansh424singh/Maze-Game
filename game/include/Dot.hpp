@@ -54,7 +54,7 @@ class Dot
 
 		bool checkDestReached();
 
-		void resetVel();
+		// void resetVel();
 
     private:
 		//The X and Y offsets of the dot

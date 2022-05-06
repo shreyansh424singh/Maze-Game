@@ -45,8 +45,7 @@ void Dot::handleEvent( SDL_Event& e )
     if( e.type == SDL_KEYDOWN && mYulu > 0){
 		if( e.key.keysym.sym == SDLK_y){
             mYOn = 1;
-            mVelX = 2;
-            mVelY = 2;
+            DOT_VEL = 2;
             mYulu--;
         }
     }
@@ -57,7 +56,7 @@ void Dot::handleEvent( SDL_Event& e )
         //Adjust the velocity
         switch( e.key.keysym.sym )
         {
-            case SDLK_UP: mVelY -= DOT_VEL; break;
+            case SDLK_UP: mVelY -= DOT_VEL; cout<<mPosX<<" x "<<mPosY<<" y "<<mVelX<<" vx "<<mVelY<<" vy \n"; break;
             case SDLK_DOWN: mVelY += DOT_VEL; break;
             case SDLK_LEFT: mVelX -= DOT_VEL; break;
             case SDLK_RIGHT: mVelX += DOT_VEL; break;
@@ -265,7 +264,7 @@ bool Dot::checkDestReached(){
     if(abs(mDestX-mPosX) <= 10 && abs(mDestY-mPosY) <= 10){
 
 //play sound
-
+//add bonus points
         //make reached = 1 
         mDestReached = 1;
         return true;
@@ -273,7 +272,7 @@ bool Dot::checkDestReached(){
     return false;
 }
 
-void Dot::resetVel(){
-    mVelX = 1;
-    mVelY = 1;
-}
+// void Dot::resetVel(){
+//     mVelX = 1;
+//     mVelY = 1;
+// }
