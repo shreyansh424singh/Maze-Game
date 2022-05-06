@@ -267,6 +267,7 @@ void randomLocation(){
 	c1=c2=0;
 
 	dot1->mYOn = 0;
+	dot1->resetVel();
 }
 
 void close()
@@ -355,8 +356,8 @@ int main( int argc, char* args[] ){
 			//While application is running
 			while( !quit ){
 
-				if(dot1->mScore < 1) {cout<<"Player2 Wins"; break;}
-				if(dot2->mScore < 1) {cout<<"Player1 Wins"; break;}
+				if(dot2->mScore < 1) {cout<<"You Won"; break;}
+				if(dot1->mScore < 1) {cout<<"You Lost"; break;}
 				
 				dot1->move(SCREEN_HEIGHT, SCREEN_WIDTH, usr_id, msock);
 				dot2->move_P2(usr_id, msock);

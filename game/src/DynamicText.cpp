@@ -15,7 +15,7 @@ DynamicText::DynamicText(std::string fontfilepath, size_t fontSize){
     if(!s_ttfInitialized && TTF_Init() == -1){
         std::cout << "Could not initailize SDL2_ttf, error: " << TTF_GetError() << std::endl;
     }else{
-        std::cout << "SDL2_ttf system ready to go!" << std::endl;
+        // std::cout << "SDL2_ttf system ready to go!" << std::endl;
         // Initialize TTF system only once, even if
         // we have multipl Text objects.
         s_ttfInitialized = true;
