@@ -10,7 +10,14 @@ Dot::Dot()
     //Initialize the offsets
     // setInitialPosition(p);
     mPosX = 540;
-    mPosY = 102;
+    mPosY = 105;
+
+    mScore = 100;
+    mYulu = 3;
+
+    mDestReached = 0;
+    mDestX = 346;
+    mDestY = 411;
 
 	//Set collision box dimension
 	mCollider.w = DOT_WIDTH;
@@ -88,7 +95,7 @@ void Dot::handleEventN( SDL_Event& e )
     }
 }
 
-void Dot::move(int SCREEN_HEIGHT, int SCREEN_WIDTH)
+void Dot::move(int SCREEN_HEIGHT, int SCREEN_WIDTH, int usr_id, int sys_sock)
 {
 //cout<<"mov \n";
 
@@ -115,7 +122,72 @@ void Dot::move(int SCREEN_HEIGHT, int SCREEN_WIDTH)
         mPosY -= mVelY;
 		mCollider.y = mPosY;
     }
+    int* locs = new int(5);
+	locs[0] = mPosX;
+	locs[1] = mPosY;
+	locs[2] = mVelX;
+	locs[3] = mVelY;
+    locs[4] = mScore;
+	if(usr_id == 0) {
+		server_send_data(sys_sock, locs);
+	}
+	else {
+		client_send_data(sys_sock, locs);
+	}
 }
+
+void Dot::move_P2(int usr_id, int sys_sock)
+{
+	int* locs = new int(5);
+	if(usr_id == 0) {
+		server_recv_data(sys_sock, locs);
+	}
+	else {
+		client_recv_data(sys_sock, locs);
+	}
+
+	mPosX = locs[0];
+	mPosY = locs[1];
+	mVelX = locs[2];
+	mVelY = locs[3];
+    mScore = locs[4];
+}
+
+void Dot::getPos(int usr_id, int sys_sock)
+{
+	int* locs = new int(5);
+	if(usr_id == 0) {
+		server_recv_data(sys_sock, locs);
+	}
+	else {
+		client_recv_data(sys_sock, locs);
+	}
+
+	mPosX = locs[0];
+	mPosY = locs[1];
+	mVelX = locs[2];
+	mVelY = locs[3];
+    mScore = locs[4];
+}
+
+
+void Dot::sendPos(int usr_id, int sys_sock)
+{
+    int* locs = new int(5);
+	locs[0] = mPosX;
+	locs[1] = mPosY;
+	locs[2] = mVelX;
+	locs[3] = mVelY;
+    locs[4] = mScore;
+	if(usr_id == 0) {
+		server_send_data(sys_sock, locs);
+	}
+	else {
+		client_send_data(sys_sock, locs);
+	}
+}
+
+
 
 void Dot::render(LTexture* gDotTexture, SDL_Renderer*& gRenderer)
 {
@@ -153,18 +225,30 @@ bool Dot::checkCollision( SDL_Rect a)
 
 void Dot::setInitialPosition(char p){
     switch(p){
-        case 'J': mPosX = 152; mPosY = 42; break;
-        case 'M': mPosX = 230; mPosY = 70; break;
-        case 'A': mPosX = 140; mPosY = 164; break;
-        case 'K': mPosX = 120; mPosY = 302; break;
-        case 'N': mPosX = 113; mPosY = 426; break;
-        case 'V': mPosX = 318; mPosY = 69; break;
-        case 'S': mPosX = 340; mPosY = 227; break;
-        case 'Z': mPosX = 343; mPosY = 301; break;
-        case 'T': mPosX = 453; mPosY = 72; break;
-        case 'G': mPosX = 540; mPosY = 102; break;
-        case 'U': mPosX = 572; mPosY = 70; break;
+        case 'J': mPosX = 161; mPosY = 45; break;
+        case 'M': mPosX = 220; mPosY = 70; break;
+        case 'A': mPosX = 140; mPosY = 168; break;
+        case 'K': mPosX = 125; mPosY = 306; break;
+        case 'N': mPosX = 118; mPosY = 426; break;
+        case 'V': mPosX = 314; mPosY = 79; break;
+        case 'S': mPosX = 324; mPosY = 230; break;
+        case 'Z': mPosX = 340; mPosY = 301; break;
+        case 'T': mPosX = 453; mPosY = 75; break;
+        case 'G': mPosX = 541; mPosY = 105; break;
+        case 'U': mPosX = 565; mPosY = 65; break;
         case 'L': mPosX = 1216; mPosY = 174; break;
-        case 'H': mPosX = 1255; mPosY = 66; break;
+        case 'H': mPosX = 1264; mPosY = 84; break;
     }
+}
+
+bool Dot::checkDestReached(){
+    if(abs(mDestX-mPosX) <= 5 && abs(mDestY-mPosY) <= 5){
+
+//play sound
+
+        //make reached = 1 
+        mDestReached = 1;
+        return true;
+    }
+    return false;
 }
