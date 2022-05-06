@@ -14,4 +14,3 @@ int connect_server();
 void server_send_data(int new_socket, int* locs);
 
 void server_recv_data(int new_socket, int* locs);
-

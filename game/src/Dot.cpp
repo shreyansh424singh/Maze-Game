@@ -9,6 +9,8 @@ Dot::Dot()
 
     //Initialize the offsets
     // setInitialPosition(p);
+    ready = 0;
+
     mPosX = 540;
     mPosY = 105;
 
@@ -125,9 +127,9 @@ void Dot::move(int SCREEN_HEIGHT, int SCREEN_WIDTH, int usr_id, int sys_sock)
     int* locs = new int(5);
 	locs[0] = mPosX;
 	locs[1] = mPosY;
-	locs[2] = mVelX;
-	locs[3] = mVelY;
-    locs[4] = mScore;
+	locs[2] = mDestReached;
+	locs[3] = mScore;
+    locs[4] = ready;
 	if(usr_id == 0) {
 		server_send_data(sys_sock, locs);
 	}
@@ -148,9 +150,9 @@ void Dot::move_P2(int usr_id, int sys_sock)
 
 	mPosX = locs[0];
 	mPosY = locs[1];
-	mVelX = locs[2];
-	mVelY = locs[3];
-    mScore = locs[4];
+	mDestReached = locs[2];
+	mScore = locs[3];
+    ready = locs[4];
 }
 
 void Dot::getPos(int usr_id, int sys_sock)
@@ -165,9 +167,13 @@ void Dot::getPos(int usr_id, int sys_sock)
 
 	mPosX = locs[0];
 	mPosY = locs[1];
-	mVelX = locs[2];
-	mVelY = locs[3];
-    mScore = locs[4];
+    mDestReached = locs[2];
+	mScore = locs[3];
+    ready = locs[4];
+
+	// mVelX = locs[2];
+	// mVelY = locs[3];
+    // mScore = locs[4];
 }
 
 
@@ -176,9 +182,13 @@ void Dot::sendPos(int usr_id, int sys_sock)
     int* locs = new int(5);
 	locs[0] = mPosX;
 	locs[1] = mPosY;
-	locs[2] = mVelX;
-	locs[3] = mVelY;
-    locs[4] = mScore;
+    locs[2] = mDestReached;
+	locs[3] = mScore;
+    locs[4] = ready;
+
+	// locs[2] = mVelX;
+	// locs[3] = mVelY;
+    // locs[4] = mScore;
 	if(usr_id == 0) {
 		server_send_data(sys_sock, locs);
 	}
@@ -242,7 +252,7 @@ void Dot::setInitialPosition(char p){
 }
 
 bool Dot::checkDestReached(){
-    if(abs(mDestX-mPosX) <= 5 && abs(mDestY-mPosY) <= 5){
+    if(abs(mDestX-mPosX) <= 10 && abs(mDestY-mPosY) <= 10){
 
 //play sound
 

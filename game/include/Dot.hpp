@@ -17,6 +17,9 @@ class Dot
 		static const int DOT_WIDTH = 20;
 		static const int DOT_HEIGHT = 20;
 
+		// Readiness
+		int ready;
+
 		//Maximum axis velocity of the dot
 		int DOT_VEL = 1;
 
