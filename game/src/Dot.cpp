@@ -56,7 +56,7 @@ void Dot::handleEvent( SDL_Event& e )
         //Adjust the velocity
         switch( e.key.keysym.sym )
         {
-            case SDLK_UP: mVelY -= DOT_VEL; cout<<mPosX<<" x "<<mPosY<<" y "<<mVelX<<" vx "<<mVelY<<" vy \n"; break;
+            case SDLK_UP: mVelY -= DOT_VEL; break;
             case SDLK_DOWN: mVelY += DOT_VEL; break;
             case SDLK_LEFT: mVelX -= DOT_VEL; break;
             case SDLK_RIGHT: mVelX += DOT_VEL; break;
