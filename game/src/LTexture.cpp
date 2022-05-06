@@ -5,7 +5,6 @@ using namespace std;
 
 LTexture::LTexture()
 {
-cout<<"tex cons \n";
 
 	//Initialize
 	mTexture = NULL;
@@ -21,12 +20,10 @@ LTexture::~LTexture()
 
 bool LTexture::loadFromFile( std::string path, SDL_Renderer*& gRenderer )
 {
-cout<<"tex load \n";
 
 	//Get rid of preexisting texture
 	free();
 
-cout<<"1\n";
 
 	//The final texture
 	SDL_Texture* newTexture = NULL;
@@ -66,12 +63,10 @@ cout<<"1\n";
 
 void LTexture::free()
 {
-cout<<"tex free \n";
 
 	//Free texture if it exists
 	if( mTexture != NULL )
 	{
-cout<<"null nhi h\n";
 
 		SDL_DestroyTexture( mTexture );
 		mTexture = NULL;
@@ -82,7 +77,6 @@ cout<<"null nhi h\n";
 
 void LTexture::setColor( Uint8 red, Uint8 green, Uint8 blue )
 {
-cout<<"tex setcol \n";
 
 	//Modulate texture rgb
 	SDL_SetTextureColorMod( mTexture, red, green, blue );
@@ -90,7 +84,6 @@ cout<<"tex setcol \n";
 
 void LTexture::setBlendMode( SDL_BlendMode blending )
 {
-cout<<"tex setblen \n";
 
 	//Set blending function
 	SDL_SetTextureBlendMode( mTexture, blending );
@@ -98,7 +91,6 @@ cout<<"tex setblen \n";
 		
 void LTexture::setAlpha( Uint8 alpha )
 {
-cout<<"tex setalpha \n";
 
 
 	//Modulate texture alpha
@@ -107,7 +99,6 @@ cout<<"tex setalpha \n";
 
 void LTexture::render( int x, int y, SDL_Renderer*& gRenderer, SDL_Rect* clip, double angle, SDL_Point* center, SDL_RendererFlip flip )
 {
-cout<<"tex render \n";
 
 
 	//Set rendering space and render to screen
@@ -126,7 +117,6 @@ cout<<"tex render \n";
 
 int LTexture::getWidth()
 {
-cout<<"tex getwid \n";
 
 
 	return mWidth;
@@ -134,7 +124,6 @@ cout<<"tex getwid \n";
 
 int LTexture::getHeight()
 {
-cout<<"tex gethei \n";
 
 	return mHeight;
 }
