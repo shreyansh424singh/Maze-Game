@@ -26,7 +26,7 @@ class Dot
 		// Score, yulu
 		int mScore, mYulu;
 
-		int mDestX, mDestY, mDestReached;
+		int mDestX, mDestY, mDestReached, mYOn;
 
         vector<int> temp;
         int backarr[1920][1080];
@@ -53,6 +53,8 @@ class Dot
 		void setInitialPosition(char p);
 
 		bool checkDestReached();
+
+		void resetVel();
 
     private:
 		//The X and Y offsets of the dot
