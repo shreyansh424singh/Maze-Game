@@ -189,19 +189,19 @@ bool loadMedia()
 	}
 
 	//Load interval texture
-	if( !intervalScreen->loadFromFile( "./assets/Images/Load_Screen.png", gRenderer ) ){
+	if( !intervalScreen->loadFromFile( "./assets/Images/GameInterval.png", gRenderer ) ){
 		printf( "Failed to load background texture image!\n" );
 		success = false;
 	}
 
 	//Load won texture
-	if( !wonScreen->loadFromFile( "./assets/Images/Load_Screen.png", gRenderer ) ){
+	if( !wonScreen->loadFromFile( "./assets/Images/Won.png", gRenderer ) ){
 		printf( "Failed to load background texture image!\n" );
 		success = false;
 	}
 
 	//Load lost texture
-	if( !lostScreen->loadFromFile( "./assets/Images/Load_Screen.png", gRenderer ) ){
+	if( !lostScreen->loadFromFile( "./assets/Images/Lost.png", gRenderer ) ){
 		printf( "Failed to load background texture image!\n" );
 		success = false;
 	}
@@ -256,8 +256,13 @@ void doRender(){
 		gBackgroundTexture->render( 0, 0, gRenderer);
 
 		//Render dot
-		dot1->render(gDotTexture, gRenderer);
-		dot2->render(gDotTexture1, gRenderer);
+		if(usr_id == 0) {
+			dot1->render(gDotTexture, gRenderer);
+			dot2->render(gDotTexture1, gRenderer);
+		} else {
+			dot1->render(gDotTexture1, gRenderer);
+			dot2->render(gDotTexture, gRenderer);
+		}
 
 		//Render Text
 		DynamicText text("./assets/fonts/alba.ttf",32);
@@ -269,8 +274,10 @@ void doRender(){
 		text.DrawText(gRenderer,to_string(c2),715,782,60,85);
 		text.DrawText(gRenderer,"Yulu Left : ",855,772,180,100);
 		text.DrawText(gRenderer,to_string(dot1->mYulu),1035,782,40,85);
-		if(dot1->mDestReached == 1 && dot2->mDestReached == 0) text.DrawText(gRenderer,"You Reached",575,892,200,100);
-		if(dot1->mDestReached == 0 && dot2->mDestReached == 1) text.DrawText(gRenderer,"Opponent Reached",575,892,200,100);
+		// if(dot1->mDestReached == 1 && dot2->mDestReached == 0) text.DrawText(gRenderer,"You Reached",575,892,200,100);
+		if(dot1->mDestReached == 1) text.DrawText(gRenderer,"You Reached",575,892,200,100);
+		// if(dot1->mDestReached == 0 && dot2->mDestReached == 1) text.DrawText(gRenderer,"Opponent Reached",575,892,200,100);
+		if(dot2->mDestReached == 1) text.DrawText(gRenderer,"Opponent Reached",575,892,200,100);
 		text.DrawText(gRenderer,"Your Score : ",1200,697,200,100);
 		text.DrawText(gRenderer,to_string(dot1->mScore),1270,757,60,100);
 		text.DrawText(gRenderer,"Opponent Score : ",1200,827,200,100);
@@ -282,7 +289,7 @@ void doRender(){
 void assign(){
 	locations["Jwalamukhi        "] = make_pair(171, 55);
 	locations["Kumaon            "] = make_pair(228, 81);
-	locations["Aravali           "] = make_pair(151, 178);
+	locations["Aravali           "] = make_pair(151, 174);
 	locations["Delhi 16          "] = make_pair(213, 203);
 	locations["Karakoram         "] = make_pair(135, 311);
 	locations["Nilgiri           "] = make_pair(128, 439);
@@ -309,7 +316,7 @@ void assign(){
 	locations["Central Workshop  "] = make_pair(945, 442);
 	locations["LHC               "] = make_pair(1016, 44);
 	locations["Textile Department"] = make_pair(1026, 315);
-	locations["Himadri           "] = make_pair(1274, 94);
+	locations["Himadri           "] = make_pair(1270, 88);
 	locations["Kailash           "] = make_pair(1226, 188);
 	locations["Guest House       "] = make_pair(1402, 196);
 	locations["Main Market       "] = make_pair(1423, 372);
@@ -319,7 +326,12 @@ void randomLocation(){
 	r1 = rand()%33;
 
 	//new destination should not be same as old destination
-	if(dot1->mDestX == locations[places[r1]].first && dot1->mDestY == locations[places[r1]].second) r1 = (r1*2)%33;
+	// if(dot1->mDestX == locations[places[r1]].first && dot1->mDestY == locations[places[r1]].second) r1 = (r1*2)%33;
+		cout<<"New loc chahiye"<<r1<<"\n";
+	if(dot1->mDestX == locations[places[r1]].first && dot1->mDestY == locations[places[r1]].second) {
+		cout<<"Same aagya\n";
+		r1 = rand()%33;
+	}
 
 	dot1->mDestX = locations[places[r1]].first;
 	dot1->mDestY = locations[places[r1]].second;
@@ -390,7 +402,7 @@ int main( int argc, char* args[] ){
 	dot1 = new Dot();
 	dot2 = new Dot();
 
-	MainMusicTrack = new Music("./assets/backsound1.mp3");
+	MainMusicTrack = new Music("./assets/Sounds/backsound1.mp3");
 	MainMusicTrack->PlayMusic(-1);
 
 	gBackgroundTexture = new LTexture();
@@ -429,11 +441,13 @@ int main( int argc, char* args[] ){
 			while( !quit ){
 
 				if(dot2->mScore < 1) {
+					cout<<"You won!\n";
 					wonScreen->render( 0, 0, gRenderer);
 					SDL_Delay(5000);
 					break;
 				}
 				if(dot1->mScore < 1) {
+					cout<<"You lost!\n";
 					lostScreen->render( 0, 0, gRenderer);
 					SDL_Delay(5000);
 					break;
@@ -441,7 +455,7 @@ int main( int argc, char* args[] ){
 				
 				dot1->move(SCREEN_HEIGHT, SCREEN_WIDTH, usr_id, msock);
 				dot2->move_P2(usr_id, msock);
-
+					// cout<<"Dot1 ready->"<<dot1->ready <<" "<<"Dot2 ready->"<<dot2->ready<<"\n";
 				if(dot2->ready == 1 && dot1->ready == 1) {
 					c1++;
 					if(c1==45){
@@ -453,16 +467,21 @@ int main( int argc, char* args[] ){
 					bool ch1 = dot1->checkDestReached();
 					// bool ch2 = dot2->checkDestReached();
 
+					// cout<<"Dot1 reached->"<<dot1->mDestReached <<" "<<"Dot2 reached->"<<dot2->mDestReached<<"\n";
 					if(dot1->mDestReached == 1 && dot2->mDestReached == 1){
+						cout<<"Both reached\n";
+						SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
+						SDL_RenderClear( gRenderer );
 
 						intervalScreen->render( 0, 0, gRenderer);
 	//add delay and some music/image
+						cout<<"Both reached\n";
 						SDL_Delay(5000);
-						// intervalScreen->free();
+						intervalScreen->free();
 
 
 						dot1->mDestReached = 0;
-						// dot2->mDestReached = 0;
+						dot2->mDestReached = 0;
 
 						randomLocation();
 					}
