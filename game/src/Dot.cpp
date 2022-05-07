@@ -42,7 +42,7 @@ Dot::Dot(){
 
 void Dot::handleEvent( SDL_Event& e ){
 
-    if( e.type == SDL_KEYDOWN && mYulu > 0){
+    if( e.type == SDL_KEYDOWN && mYulu > 0 && mYOn == 0){
 		if( e.key.keysym.sym == SDLK_y){
             mYOn = 1;
             // DOT_VEL = 2;
@@ -224,12 +224,10 @@ bool Dot::checkDestReached(){
     if(abs(mDestX-mPosX) <= 15 && abs(mDestY-mPosY) <= 15){
 
 //play sound
-
     CoinCollect->PlaySound();
 
 //add bonus points
         //make reached = 1
-        // cout<<"Rewards = "<<myReward<<"\n"; 
         mScore+=myReward;
         myReward = 0;
         mDestReached = 1;

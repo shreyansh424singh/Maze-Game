@@ -302,9 +302,7 @@ void doRender(){
 			text.DrawText(gRenderer,to_string(c2),715,782,60,85);
 			text.DrawText(gRenderer,"Yulu Left : ",855,772,180,100);
 			text.DrawText(gRenderer,to_string(dot1->mYulu),1035,782,40,85);
-			// if(dot1->mDestReached == 1 && dot2->mDestReached == 0) text.DrawText(gRenderer,"You Reached",575,892,200,100);
 			if(dot1->mDestReached == 1) text.DrawText(gRenderer,"You Reached",575,892,200,100);
-			// if(dot1->mDestReached == 0 && dot2->mDestReached == 1) text.DrawText(gRenderer,"Opponent Reached",575,892,200,100);
 			if(dot2->mDestReached == 1) text.DrawText(gRenderer,"Opponent Reached",775,892,200,100);
 			text.DrawText(gRenderer,"Your Score : ",1200,697,200,100);
 			text.DrawText(gRenderer,to_string(dot1->mScore),1270,757,60,100);
@@ -355,11 +353,8 @@ void randomLocation(){
 	r1 = rand()%33;
 
 	//new destination should not be same as old destination
-	// if(dot1->mDestX == locations[places[r1]].first && dot1->mDestY == locations[places[r1]].second) r1 = (r1*2)%33;
-		// cout<<"New loc chahiye"<<r1<<"\n";
 	while(dot1->mDestX == locations[places[r1]].first && dot1->mDestY == locations[places[r1]].second 
 	   && abs(dot1->returnX() - locations[places[r1]].first) <= 50 && abs(dot1->returnY() - locations[places[r1]].second) <= 50 ) {
-		// cout<<"Same aagya\n";
 		r1 = rand()%33;
 	}
 
@@ -373,8 +368,6 @@ void randomLocation(){
 	c1=c2=0;
 
 	dot1->mYOn = 0;
-	// dot1->DOT_VEL = 1;
-	// dot1->resetVel();
 }
 
 void close()
