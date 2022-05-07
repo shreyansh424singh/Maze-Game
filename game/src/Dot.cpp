@@ -227,8 +227,6 @@ void Dot::setInitialPosition(char p){
 bool Dot::checkDestReached(){
     if(abs(mDestX-mPosX) <= 15 && abs(mDestY-mPosY) <= 15){
 
-//add bonus points
-        //make reached = 1
         mScore+=myReward;
         myReward = 0;
         mDestReached = 1;
