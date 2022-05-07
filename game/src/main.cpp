@@ -478,6 +478,13 @@ int main( int argc, char* args[] ){
 					if(dot1->mDestReached == 1 && dot2->mDestReached == 1){
 						dot1->sendPos(usr_id, msock);
 						dot2->getPos(usr_id, msock);
+
+
+		// //Render Text
+		// DynamicText text("./assets/fonts/alba.ttf",32);
+
+		// 				if(dot1->mDestReached == 1) text.DrawText(gRenderer,"You Reached",575,892,200,100);
+		// 				if(dot2->mDestReached == 1) text.DrawText(gRenderer,"Opponent Reached",775,892,200,100);
 // CoinCollect->PlaySound();
 
 						cout<<"Both reached\n";
@@ -496,6 +503,8 @@ int main( int argc, char* args[] ){
 
 						randomLocation();
 					}
+					dot1->sendPos(usr_id, msock);
+					dot2->getPos(usr_id, msock);
 				}
 
 				//Clear screen
