@@ -591,13 +591,13 @@ int main( int argc, char* args[] ){
 				dot1->move(SCREEN_HEIGHT, SCREEN_WIDTH, usr_id, msock);
 				dot2->move_P2(usr_id, msock);
 
-				if(g0 == 1 && abs(guards[0].first - dot1->returnX()) < 13 &&  abs(guards[0].second - dot1->returnY()) < 13) {dot1->mScore -= 20; g0=0; CoinCollect->PlayMusic(1);}
-				if(g1 == 1 && abs(guards[1].first - dot1->returnX()) < 13 &&  abs(guards[1].second - dot1->returnY()) < 13) {dot1->mScore -= 20; g1=0; CoinCollect->PlayMusic(1);}
-				if(g2 == 1 && abs(guards[2].first - dot1->returnX()) < 13 &&  abs(guards[2].second - dot1->returnY()) < 13) {dot1->mScore -= 20; g2=0; CoinCollect->PlayMusic(1);}
-				if(g3 == 1 && abs(guards[3].first - dot1->returnX()) < 13 &&  abs(guards[3].second - dot1->returnY()) < 13) {dot1->mScore -= 20; g3=0; CoinCollect->PlayMusic(1);}
-				if(g4 == 1 && abs(guards[4].first - dot1->returnX()) < 13 &&  abs(guards[4].second - dot1->returnY()) < 13) {dot1->mScore -= 20; g4=0; CoinCollect->PlayMusic(1);}
-				if(g5 == 1 && abs(guards[5].first - dot1->returnX()) < 13 &&  abs(guards[5].second - dot1->returnY()) < 13) {dot1->mScore -= 20; g5=0; CoinCollect->PlayMusic(1);}
-				if(g6 == 1 && abs(guards[6].first - dot1->returnX()) < 13 &&  abs(guards[6].second - dot1->returnY()) < 13) {dot1->mScore -= 20; g6=0; CoinCollect->PlayMusic(1);}
+				if(g0 == 1 && abs(guards[0].first - dot1->returnX()) < 13 &&  abs(guards[0].second - dot1->returnY()) < 13) {dot1->mScore -= 20; g0=0;}
+				if(g1 == 1 && abs(guards[1].first - dot1->returnX()) < 13 &&  abs(guards[1].second - dot1->returnY()) < 13) {dot1->mScore -= 20; g1=0;}
+				if(g2 == 1 && abs(guards[2].first - dot1->returnX()) < 13 &&  abs(guards[2].second - dot1->returnY()) < 13) {dot1->mScore -= 20; g2=0;}
+				if(g3 == 1 && abs(guards[3].first - dot1->returnX()) < 13 &&  abs(guards[3].second - dot1->returnY()) < 13) {dot1->mScore -= 20; g3=0;}
+				if(g4 == 1 && abs(guards[4].first - dot1->returnX()) < 13 &&  abs(guards[4].second - dot1->returnY()) < 13) {dot1->mScore -= 20; g4=0;}
+				if(g5 == 1 && abs(guards[5].first - dot1->returnX()) < 13 &&  abs(guards[5].second - dot1->returnY()) < 13) {dot1->mScore -= 20; g5=0;}
+				if(g6 == 1 && abs(guards[6].first - dot1->returnX()) < 13 &&  abs(guards[6].second - dot1->returnY()) < 13) {dot1->mScore -= 20; g6=0;}
 
 				if(dot2->ready == 1 && dot1->ready == 1) {
 					c1++;
