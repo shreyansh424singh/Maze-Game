@@ -559,7 +559,7 @@ int main( int argc, char* args[] ){
 
 					//check if player reached destination
 					bool ch1 = dot1->checkDestReached();
-					if(ch1 == 1) {
+					if(ch1 == 1 && c3 == 0) {
 						CoinCollect->PlayMusic(1);
 					}
 
