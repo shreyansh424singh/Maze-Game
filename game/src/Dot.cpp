@@ -229,7 +229,7 @@ bool Dot::checkDestReached(){
 
 //add bonus points
         //make reached = 1
-        cout<<"Rewards = "<<myReward<<"\n"; 
+        // cout<<"Rewards = "<<myReward<<"\n"; 
         mScore+=myReward;
         myReward = 0;
         mDestReached = 1;
@@ -241,4 +241,12 @@ bool Dot::checkDestReached(){
 void Dot::resetVel(){
     mVelX=0;
     mVelY=0;
+}
+
+int Dot::returnX(){
+    return mPosX;
+}
+
+int Dot::returnY(){
+    return mPosY;
 }

@@ -55,6 +55,9 @@ class Dot
 
 		void resetVel();
 
+		int returnX();
+		int returnY();
+
     private:
 		//The X and Y offsets of the dot
 		int mPosX, mPosY;

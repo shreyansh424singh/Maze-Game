@@ -267,18 +267,18 @@ void doRender(){
 		else if(los == 1){
 			lostScreen->render( 0, 0, gRenderer);
 		}
-		else if(interval == 1){
-			cout<<"bhaiya\n";
-			intervalScreen->render( 0, 0, gRenderer);
-			this_thread::sleep_for(5000ms);
+		// else if(interval == 1){
+		// 	cout<<"bhaiya\n";
+		// 	intervalScreen->render( 0, 0, gRenderer);
+		// 	this_thread::sleep_for(5000ms);
 			// t_end = chrono::steady_clock::now();
 			// cout<<chrono::duration_cast<std::chrono::microseconds>(t_end - t_begin).count()<<"\n";
 			// if(chrono::duration_cast<std::chrono::microseconds>(t_end - t_begin).count() == 2000){
-				cout<<"op bolte\n";
-				randomLocation();
-				interval = 0;
+				// cout<<"op bolte\n";
+				// randomLocation();
+				// interval = 0;
 			// }
-		}
+		// }
 		else{
 			//Render background texture to screen
 			gBackgroundTexture->render( 0, 0, gRenderer);
@@ -346,7 +346,7 @@ void assign(){
 	locations["LHC               "] = make_pair(1016, 440);
 	locations["Textile Department"] = make_pair(1026, 315);
 	locations["Himadri           "] = make_pair(1270, 88);
-	locations["Kailash           "] = make_pair(1226, 188);
+	locations["Kailash           "] = make_pair(1226, 184);
 	locations["Guest House       "] = make_pair(1402, 196);
 	locations["Main Market       "] = make_pair(1423, 372);
 }
@@ -357,9 +357,8 @@ void randomLocation(){
 	//new destination should not be same as old destination
 	// if(dot1->mDestX == locations[places[r1]].first && dot1->mDestY == locations[places[r1]].second) r1 = (r1*2)%33;
 		// cout<<"New loc chahiye"<<r1<<"\n";
-	while(dot1->mDestX != locations[places[r1]].first && dot1->mDestY != locations[places[r1]].second 
-	   && dot1->mDestX != locations[places[r1]].first && dot1->mDestY != locations[places[r1]].second 
-	) {
+	while(dot1->mDestX == locations[places[r1]].first && dot1->mDestY == locations[places[r1]].second 
+	   && abs(dot1->returnX() - locations[places[r1]].first) <= 50 && abs(dot1->returnY() - locations[places[r1]].second) <= 50 ) {
 		// cout<<"Same aagya\n";
 		r1 = rand()%33;
 	}
