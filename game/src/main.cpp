@@ -25,11 +25,11 @@ map<string, pair<int, int>> locations;
 
 int locRewards[33] = {5, 5, 5, 4, 5, 5, 6, 7, 5, 6, 5, 4, 5, 4, 5, 5, 5, 5, 8, 8, 8, 8, 6, 7, 7, 6, 8, 6, 8, 5, 5, 9, 10};
 
-pair<int, int> guards[7] = {	make_pair(198, 109),
+pair<int, int> guards[7] = {	make_pair(409, 179),
 								make_pair(302, 207),
 								make_pair(185, 256),
 								make_pair(953, 306),
-								make_pair(641, 380),
+								make_pair(933, 600),
 								make_pair(284, 428),
 								make_pair(418, 209) };
 
@@ -107,6 +107,8 @@ void assign();
 
 //generates new random destination for players
 void randomLocation();
+
+void gaurdRen(int n);
 
 //The window we'll be rendering to
 SDL_Window* gWindow = NULL;
@@ -190,7 +192,7 @@ bool loadMedia()
 	}
 
 	//Load press texture
-	if( !gGaurdTexture->loadFromFile( "./assets/Images/dot.bmp", gRenderer ) ){
+	if( !gGaurdTexture->loadFromFile( "./assets/Images/guard.png", gRenderer ) ){
 		printf( "Failed to load dot texture!\n" );
 		success = false;
 	}
@@ -268,33 +270,35 @@ void hostelEvent(SDL_Event& e){
 
 void doRender(){
 
-	if(g0 == 1){
-		gGaurdTexture->render( guards[0].first, guards[0].second, gRenderer );
-	}
+// cout<<"in render  "<<g0<<" "<<g1<<" "<<g2<<" "<<g3<<" "<<g4<<" "<<g5<<" "<<g6;
 
-	if(g1 == 1){
-		gGaurdTexture->render( guards[1].first, guards[1].second, gRenderer );
-	}
+	// if(g0 == 1){
+	// 	gGaurdTexture->render( guards[0].first, guards[0].second, gRenderer );
+	// }
 
-	if(g2 == 1){
-		gGaurdTexture->render( guards[2].first, guards[2].second, gRenderer );
-	}
+	// if(g1 == 1){
+	// 	gGaurdTexture->render( guards[1].first, guards[1].second, gRenderer );
+	// }
 
-	if(g3 == 1){
-		gGaurdTexture->render( guards[3].first, guards[3].second, gRenderer );
-	}
+	// if(g2 == 1){
+	// 	gGaurdTexture->render( guards[2].first, guards[2].second, gRenderer );
+	// }
 
-	if(g4 == 1){
-		gGaurdTexture->render( guards[4].first, guards[4].second, gRenderer );
-	}
+	// if(g3 == 1){
+	// 	gGaurdTexture->render( guards[3].first, guards[3].second, gRenderer );
+	// }
 
-	if(g5 == 1){
-		gGaurdTexture->render( guards[5].first, guards[5].second, gRenderer );
-	}
+	// if(g4 == 1){
+	// 	gGaurdTexture->render( guards[4].first, guards[4].second, gRenderer );
+	// }
 
-	if(g6 == 1){
-		gGaurdTexture->render( guards[6].first, guards[6].second, gRenderer );
-	}
+	// if(g5 == 1){
+	// 	gGaurdTexture->render( guards[5].first, guards[5].second, gRenderer );
+	// }
+
+	// if(g6 == 1){
+	// 	gGaurdTexture->render( guards[6].first, guards[6].second, gRenderer );
+	// }
 
 	if(flag == 2){
 		mainSelection->render( 0, 0, gRenderer);
@@ -326,6 +330,34 @@ void doRender(){
 		else{
 			//Render background texture to screen
 			gBackgroundTexture->render( 0, 0, gRenderer);
+
+if(g0 == 1){
+		gGaurdTexture->render( guards[0].first, guards[0].second, gRenderer );
+	}
+
+	if(g1 == 1){
+		gGaurdTexture->render( guards[1].first, guards[1].second, gRenderer );
+	}
+
+	if(g2 == 1){
+		gGaurdTexture->render( guards[2].first, guards[2].second, gRenderer );
+	}
+
+	if(g3 == 1){
+		gGaurdTexture->render( guards[3].first, guards[3].second, gRenderer );
+	}
+
+	if(g4 == 1){
+		gGaurdTexture->render( guards[4].first, guards[4].second, gRenderer );
+	}
+
+	if(g5 == 1){
+		gGaurdTexture->render( guards[5].first, guards[5].second, gRenderer );
+	}
+
+	if(g6 == 1){
+		gGaurdTexture->render( guards[6].first, guards[6].second, gRenderer );
+	}
 
 			//Render dot
 			if(usr_id == 0) {
@@ -404,9 +436,27 @@ void randomLocation(){
 		r1 = rand()%33;
 	}
 
-if(r1%3==0){
-	
-}
+	// g0=0, g1=0, g2=0, g3=0, g4=0, g5=0, g6=0;
+
+	// cout<<g0<<" ran g0\n";
+	// gaurdRen(0);
+	// cout<<g0<<" after ran g0\n";
+	// if(r1%2==0) gaurdRen(r1%7);
+
+	if(r1%2==0){
+		gaurdRen(r1%7);
+		cout<<"gaurd hai 1 "<<r1%7<<endl;
+	}
+	if(r1%3==0){
+		gaurdRen((r1/5)%7);
+		cout<<"gaurd hai 2 "<<((r1/5)%7)<<endl;
+	}
+	if(r1%5==0){
+		gaurdRen((r1/11)%7);
+		cout<<"gaurd hai 3 "<<((r1/11)%7)<<endl;
+	}
+
+	cout<<"in random  "<<g0<<" "<<g1<<" "<<g2<<" "<<g3<<" "<<g4<<" "<<g5<<" "<<g6;
 
 // in random location
 	dot1->myReward = locRewards[r1];
@@ -417,6 +467,18 @@ if(r1%3==0){
 	c1=c2=0;
 
 	dot1->mYOn = 0;
+}
+
+void gaurdRen(int n){
+	switch(n){
+		case 0: g0=1; break;
+		case 1: g1=1; break;
+		case 2: g2=1; break;
+		case 3: g3=1; break;
+		case 4: g4=1; break;
+		case 5: g5=1; break;
+		case 6: g6=1; break;
+	}
 }
 
 void close()
@@ -551,7 +613,7 @@ int main( int argc, char* args[] ){
 					if(dot1->mDestReached == 1 && dot2->mDestReached == 1){
 
 						dot1->intervalFlag = 1;
-						if(c3==0) c3 = 45*3;
+						if(c3==0) c3 = 45*5;
 
 						dot1->sendPos(usr_id, msock);
 						dot2->getPos(usr_id, msock);
