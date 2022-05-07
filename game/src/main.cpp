@@ -316,7 +316,7 @@ void assign(){
 	locations["Dogra Hall        "] = make_pair(881, 324);
 	locations["Blocks            "] = make_pair(864, 220);
 	locations["Central Workshop  "] = make_pair(945, 442);
-	locations["LHC               "] = make_pair(1016, 44);
+	locations["LHC               "] = make_pair(1016, 440);
 	locations["Textile Department"] = make_pair(1026, 315);
 	locations["Himadri           "] = make_pair(1270, 88);
 	locations["Kailash           "] = make_pair(1226, 188);
