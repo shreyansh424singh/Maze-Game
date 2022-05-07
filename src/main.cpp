@@ -314,12 +314,9 @@ void doRender(){
 			lostScreen->render( 0, 0, gRenderer);
 		}
 		else if(dot1->intervalFlag == 1){
-			cout<<"bhaiya\n";
 			intervalScreen->render( 0, 0, gRenderer);
 			c3--;
-			cout<<c3<<" c3\n";
 			if(c3 == 0) {
-				cout<<"op bolte\n";
 				randomLocation();
 				dot1->intervalFlag = 0;
 			}
