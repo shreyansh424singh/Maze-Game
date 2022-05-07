@@ -19,16 +19,12 @@ int interval=0, won=0, los=0;
 
 map<string, pair<int, int>> locations;
 
+//array stores rewards for different locations
 int locRewards[33] = {5, 5, 5, 4, 5, 5, 6, 7, 5, 6, 5, 4, 5, 4, 5, 5, 5, 5, 8, 8, 8, 8, 6, 7, 7, 6, 8, 6, 8, 5, 5, 9, 10};
 
-pair<int, int> guards[7] = {	make_pair(409, 179),
-								make_pair(302, 207),
-								make_pair(185, 256),
-								make_pair(953, 306),
-								make_pair(933, 600),
-								make_pair(284, 428),
-								make_pair(418, 209) };
+pair<int, int> guards[7] = {make_pair(409, 179), make_pair(302, 207), make_pair(185, 256), make_pair(953, 306), make_pair(933, 600), make_pair(284, 428), make_pair(418, 209) };
 
+//stores all different places
 string places[33] = {	"Jwalamukhi        ",
 						"Kumaon            ",
 						"Aravali           ",
