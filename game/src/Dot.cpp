@@ -4,14 +4,13 @@
 
 using namespace std;
 
-// Sound* CoinCollect;
-// Music* CoinCollect;
 
 Dot::Dot(){
     //Initialize the offsets
     // setInitialPosition(p);
     ready = 0;
     myReward = 0;
+    intervalFlag = 0;
 
     mPosX = 540;
     mPosY = 105;
@@ -108,12 +107,13 @@ void Dot::move(int SCREEN_HEIGHT, int SCREEN_WIDTH, int usr_id, int sys_sock){
         mPosY -= mVelY;
 		mCollider.y = mPosY;
     }
-    int* locs = new int(5);
+    int* locs = new int(6);
 	locs[0] = mPosX;
 	locs[1] = mPosY;
 	locs[2] = mDestReached;
 	locs[3] = mScore;
     locs[4] = ready;
+    locs[5] = intervalFlag;
 	if(usr_id == 0) {
 		server_send_data(sys_sock, locs);
 	}
@@ -124,7 +124,7 @@ void Dot::move(int SCREEN_HEIGHT, int SCREEN_WIDTH, int usr_id, int sys_sock){
 
 void Dot::move_P2(int usr_id, int sys_sock)
 {
-	int* locs = new int(5);
+	int* locs = new int(6);
 	if(usr_id == 0) {
 		server_recv_data(sys_sock, locs);
 	}
@@ -137,11 +137,12 @@ void Dot::move_P2(int usr_id, int sys_sock)
 	mDestReached = locs[2];
 	mScore = locs[3];
     ready = locs[4];
+    intervalFlag = locs[5];
 }
 
 void Dot::getPos(int usr_id, int sys_sock){
 
-	int* locs = new int(5);
+	int* locs = new int(6);
 	if(usr_id == 0) {
 		server_recv_data(sys_sock, locs);
 	}
@@ -154,17 +155,19 @@ void Dot::getPos(int usr_id, int sys_sock){
     mDestReached = locs[2];
 	mScore = locs[3];
     ready = locs[4];
+    intervalFlag = locs[5];
 }
 
 
 void Dot::sendPos(int usr_id, int sys_sock)
 {
-    int* locs = new int(5);
+    int* locs = new int(6);
 	locs[0] = mPosX;
 	locs[1] = mPosY;
     locs[2] = mDestReached;
 	locs[3] = mScore;
     locs[4] = ready;
+    locs[5] = intervalFlag;
 
 	if(usr_id == 0) {
 		server_send_data(sys_sock, locs);
@@ -223,9 +226,6 @@ void Dot::setInitialPosition(char p){
 
 bool Dot::checkDestReached(){
     if(abs(mDestX-mPosX) <= 15 && abs(mDestY-mPosY) <= 15){
-
-//play sound
-    // CoinCollect->PlayMusic(1);
 
 //add bonus points
         //make reached = 1

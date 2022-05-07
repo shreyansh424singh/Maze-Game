@@ -42,17 +42,17 @@ int connect_client(char* ip_add)
 }
 
 void client_send_data(int new_socket, int* locs) {
-	int16_t* sdata = new int16_t(5);
-	for(int i = 0; i<5; i++) {
+	int16_t* sdata = new int16_t(6);
+	for(int i = 0; i<6; i++) {
 		sdata[i] = (int16_t)locs[i];
 	}
-	send(new_socket, sdata, sizeof(int16_t)*5, 0);
+	send(new_socket, sdata, sizeof(int16_t)*6, 0);
 }
 
 void client_recv_data(int new_socket, int* locs) {
-	int16_t buffer[5] = { 0 };
-	int valread = read(new_socket, buffer, sizeof(int16_t)*5);
-	for(int i = 0; i<5; i++) {
+	int16_t buffer[6] = { 0 };
+	int valread = read(new_socket, buffer, sizeof(int16_t)*6);
+	for(int i = 0; i<6; i++) {
 		locs[i] = (int)buffer[i];
 	}
 }

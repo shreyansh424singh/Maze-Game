@@ -18,7 +18,7 @@ class Dot
 		static const int DOT_HEIGHT = 20;
 
 		// Readiness
-		int ready, myReward;
+		int ready, myReward, intervalFlag;
 
 		//Maximum axis velocity of the dot
 		int DOT_VEL = 1;

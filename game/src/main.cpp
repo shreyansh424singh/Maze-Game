@@ -17,12 +17,21 @@ using namespace std::chrono_literals;
 
 int usr_id, msock;
 int c1, c2, c3=0, r1;
+int g0=0, g1=0, g2=0, g3=0, g4=0, g5=0, g6=0;
 int interval=0, won=0, los=0;
 chrono::steady_clock::time_point t_begin , t_end;
 
 map<string, pair<int, int>> locations;
 
 int locRewards[33] = {5, 5, 5, 4, 5, 5, 6, 7, 5, 6, 5, 4, 5, 4, 5, 5, 5, 5, 8, 8, 8, 8, 6, 7, 7, 6, 8, 6, 8, 5, 5, 9, 10};
+
+pair<int, int> guards[7] = {	make_pair(198, 109),
+								make_pair(302, 207),
+								make_pair(185, 256),
+								make_pair(953, 306),
+								make_pair(641, 380),
+								make_pair(284, 428),
+								make_pair(418, 209) };
 
 string places[33] = {	"Jwalamukhi        ",
 						"Kumaon            ",
@@ -108,6 +117,7 @@ SDL_Renderer* gRenderer = NULL;
 //Scene textures
 LTexture* gDotTexture;
 LTexture* gDotTexture1;
+LTexture* gGaurdTexture;
 LTexture* gBackgroundTexture;
 LTexture* hostelSelection;
 LTexture* mainSelection;
@@ -175,6 +185,12 @@ bool loadMedia()
 
 	//Load press texture
 	if( !gDotTexture1->loadFromFile( "./assets/Images/Dot1.png", gRenderer ) ){
+		printf( "Failed to load dot texture!\n" );
+		success = false;
+	}
+
+	//Load press texture
+	if( !gGaurdTexture->loadFromFile( "./assets/Images/dot.bmp", gRenderer ) ){
 		printf( "Failed to load dot texture!\n" );
 		success = false;
 	}
@@ -252,6 +268,34 @@ void hostelEvent(SDL_Event& e){
 
 void doRender(){
 
+	if(g0 == 1){
+		gGaurdTexture->render( guards[0].first, guards[0].second, gRenderer );
+	}
+
+	if(g1 == 1){
+		gGaurdTexture->render( guards[1].first, guards[1].second, gRenderer );
+	}
+
+	if(g2 == 1){
+		gGaurdTexture->render( guards[2].first, guards[2].second, gRenderer );
+	}
+
+	if(g3 == 1){
+		gGaurdTexture->render( guards[3].first, guards[3].second, gRenderer );
+	}
+
+	if(g4 == 1){
+		gGaurdTexture->render( guards[4].first, guards[4].second, gRenderer );
+	}
+
+	if(g5 == 1){
+		gGaurdTexture->render( guards[5].first, guards[5].second, gRenderer );
+	}
+
+	if(g6 == 1){
+		gGaurdTexture->render( guards[6].first, guards[6].second, gRenderer );
+	}
+
 	if(flag == 2){
 		mainSelection->render( 0, 0, gRenderer);
 	}
@@ -268,18 +312,17 @@ void doRender(){
 		else if(los == 1){
 			lostScreen->render( 0, 0, gRenderer);
 		}
-		// else if(interval == 1){
-		// 	cout<<"bhaiya\n";
-		// 	intervalScreen->render( 0, 0, gRenderer);
-		// 	this_thread::sleep_for(5000ms);
-			// t_end = chrono::steady_clock::now();
-			// cout<<chrono::duration_cast<std::chrono::microseconds>(t_end - t_begin).count()<<"\n";
-			// if(chrono::duration_cast<std::chrono::microseconds>(t_end - t_begin).count() == 2000){
-				// cout<<"op bolte\n";
-				// randomLocation();
-				// interval = 0;
-			// }
-		// }
+		else if(dot1->intervalFlag == 1){
+			cout<<"bhaiya\n";
+			intervalScreen->render( 0, 0, gRenderer);
+			c3--;
+			cout<<c3<<" c3\n";
+			if(c3 == 0) {
+				cout<<"op bolte\n";
+				randomLocation();
+				dot1->intervalFlag = 0;
+			}
+		}
 		else{
 			//Render background texture to screen
 			gBackgroundTexture->render( 0, 0, gRenderer);
@@ -361,6 +404,9 @@ void randomLocation(){
 		r1 = rand()%33;
 	}
 
+if(r1%3==0){
+	
+}
 
 // in random location
 	dot1->myReward = locRewards[r1];
@@ -376,6 +422,7 @@ void randomLocation(){
 void close()
 {
 	//Free loaded images
+	gGaurdTexture->free();
 	gDotTexture->free();
 	gDotTexture1->free();
     gBackgroundTexture->free();
@@ -397,6 +444,7 @@ void close()
 
 	delete dot1;
 	delete dot1;
+	delete gGaurdTexture;
 	delete gDotTexture;
 	delete gDotTexture1;
 	delete gBackgroundTexture;
@@ -441,6 +489,7 @@ int main( int argc, char* args[] ){
 	CoinCollect = new Music("./assets/Sounds/coin.wav");
 
 	gBackgroundTexture = new LTexture();
+	gGaurdTexture = new LTexture();
 	gDotTexture = new LTexture();
 	gDotTexture1 = new LTexture();
 	hostelSelection = new LTexture();
@@ -486,7 +535,7 @@ int main( int argc, char* args[] ){
 				if(dot2->ready == 1 && dot1->ready == 1) {
 					c1++;
 					if(c1==45){
-						c1=0; c2++; c3++;
+						c1=0; c2++;
 						if(dot1->mDestReached == 0) dot1->mScore -= (2-dot1->mYOn);
 						// if(dot2->mDestReached == 0) dot2->mScore-=3;
 					}
@@ -501,7 +550,8 @@ int main( int argc, char* args[] ){
 					// cout<<"Dot1 reached->"<<dot1->mDestReached <<" "<<"Dot2 reached->"<<dot2->mDestReached<<"\n";
 					if(dot1->mDestReached == 1 && dot2->mDestReached == 1){
 
-						// interval = 1;
+						dot1->intervalFlag = 1;
+						if(c3==0) c3 = 45*3;
 
 						dot1->sendPos(usr_id, msock);
 						dot2->getPos(usr_id, msock);
@@ -510,16 +560,16 @@ int main( int argc, char* args[] ){
 						// doRender();
 
 						// intervalScreen->render( 0, 0, gRenderer);
-						SDL_Delay(1000);
+						// SDL_Delay(1000);
 						// interval = 0;
 
 
 						dot1->mDestReached = 0;
 
-						randomLocation();
+						// randomLocation();
 					}
-					dot1->sendPos(usr_id, msock);
-					dot2->getPos(usr_id, msock);
+					// dot1->sendPos(usr_id, msock);
+					// dot2->getPos(usr_id, msock);
 				}
 
 				//Clear screen
