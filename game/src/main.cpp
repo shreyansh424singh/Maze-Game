@@ -476,7 +476,8 @@ int main( int argc, char* args[] ){
 
 					// cout<<"Dot1 reached->"<<dot1->mDestReached <<" "<<"Dot2 reached->"<<dot2->mDestReached<<"\n";
 					if(dot1->mDestReached == 1 && dot2->mDestReached == 1){
-
+						dot1->sendPos(usr_id, msock);
+						dot2->getPos(usr_id, msock);
 // CoinCollect->PlaySound();
 
 						cout<<"Both reached\n";
@@ -491,7 +492,7 @@ int main( int argc, char* args[] ){
 
 
 						dot1->mDestReached = 0;
-						dot2->mDestReached = 0;
+						// dot2->mDestReached = 0;
 
 						randomLocation();
 					}
