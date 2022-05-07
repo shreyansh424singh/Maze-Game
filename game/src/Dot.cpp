@@ -10,6 +10,7 @@ Dot::Dot(){
     //Initialize the offsets
     // setInitialPosition(p);
     ready = 0;
+    myReward = 0;
 
     mPosX = 540;
     mPosY = 105;
@@ -224,10 +225,13 @@ bool Dot::checkDestReached(){
 
 //play sound
 
-CoinCollect->PlaySound();
+    CoinCollect->PlaySound();
 
 //add bonus points
-        //make reached = 1 
+        //make reached = 1
+        cout<<"Rewards = "<<myReward<<"\n"; 
+        mScore+=myReward;
+        myReward = 0;
         mDestReached = 1;
         return true;
     }

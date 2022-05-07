@@ -357,7 +357,9 @@ void randomLocation(){
 	//new destination should not be same as old destination
 	// if(dot1->mDestX == locations[places[r1]].first && dot1->mDestY == locations[places[r1]].second) r1 = (r1*2)%33;
 		// cout<<"New loc chahiye"<<r1<<"\n";
-	if(dot1->mDestX == locations[places[r1]].first && dot1->mDestY == locations[places[r1]].second) {
+	while(dot1->mDestX != locations[places[r1]].first && dot1->mDestY != locations[places[r1]].second 
+	   && dot1->mDestX != locations[places[r1]].first && dot1->mDestY != locations[places[r1]].second 
+	) {
 		// cout<<"Same aagya\n";
 		r1 = rand()%33;
 	}
@@ -500,7 +502,7 @@ int main( int argc, char* args[] ){
 					// cout<<"Dot1 reached->"<<dot1->mDestReached <<" "<<"Dot2 reached->"<<dot2->mDestReached<<"\n";
 					if(dot1->mDestReached == 1 && dot2->mDestReached == 1){
 
-						interval = 1;
+						// interval = 1;
 
 						dot1->sendPos(usr_id, msock);
 						dot2->getPos(usr_id, msock);
@@ -509,13 +511,13 @@ int main( int argc, char* args[] ){
 						// doRender();
 
 						// intervalScreen->render( 0, 0, gRenderer);
-						// SDL_Delay(5000);
+						SDL_Delay(1000);
 						// interval = 0;
 
 
 						dot1->mDestReached = 0;
 
-						// randomLocation();
+						randomLocation();
 					}
 					dot1->sendPos(usr_id, msock);
 					dot2->getPos(usr_id, msock);
