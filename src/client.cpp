@@ -1,12 +1,3 @@
-// Client side C/C++ program to demonstrate Socket
-// programming
-// #include <arpa/inet.h>
-// #include <stdio.h>
-// #include <string.h>
-// #include <iostream>
-// #include <sys/socket.h>
-// #include <unistd.h>
-// #define PORT 8080
 #include "client.h"
 
 int connect_client(char* ip_add)
@@ -56,21 +47,3 @@ void client_recv_data(int new_socket, int* locs) {
 		locs[i] = (int)buffer[i];
 	}
 }
-
-// 	bool end_connection = false;
-// 	while(!end_connection) {
-// 		int16_t buffer[5] = { 0 };
-// 		int16_t* cdata = new int16_t(5);
-// 		for(int16_t i = 0; i<5; i++) {
-// 			cdata[i] = i;
-// 		}
-// 		send(sock, cdata, sizeof(int16_t)*5, 0);
-// 		// printf("Hello message sent\n");
-// 		valread = read(sock, buffer, sizeof(int16_t)*5);
-// 		// printf("%s\n", buffer);
-// 		std::cout<<buffer[0]<<" "<<buffer[1]<<" "<<buffer[2]<<" "<<buffer[3]<<" "<<buffer[4]<<std::endl;
-		
-// 		end_connection = true;
-// 	}
-// 	return 0;
-// }

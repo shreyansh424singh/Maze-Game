@@ -6,20 +6,16 @@
 
 #include "Dot.hpp"
 #include "Music.hpp"
-// #include "Sound.hpp"
 #include "DynamicText.hpp"
-// #include "LTexture.hpp"
 
 #include<bits/stdc++.h>
 
 using namespace std;
-using namespace std::chrono_literals;
 
 int usr_id, msock;
 int c1, c2, c3=0, r1;
 int g0=0, g1=0, g2=0, g3=0, g4=0, g5=0, g6=0;
 int interval=0, won=0, los=0;
-chrono::steady_clock::time_point t_begin , t_end;
 
 map<string, pair<int, int>> locations;
 
@@ -79,7 +75,6 @@ Dot* dot2;
 
 Music* MainMusicTrack;
 Music* CoinCollect;
-// Sound* CoinCollect;
 
 //Starts up SDL and creates window
 bool init();
@@ -267,36 +262,6 @@ void hostelEvent(SDL_Event& e){
 
 void doRender(){
 
-// cout<<"in render  "<<g0<<" "<<g1<<" "<<g2<<" "<<g3<<" "<<g4<<" "<<g5<<" "<<g6;
-
-	// if(g0 == 1){
-	// 	gGaurdTexture->render( guards[0].first, guards[0].second, gRenderer );
-	// }
-
-	// if(g1 == 1){
-	// 	gGaurdTexture->render( guards[1].first, guards[1].second, gRenderer );
-	// }
-
-	// if(g2 == 1){
-	// 	gGaurdTexture->render( guards[2].first, guards[2].second, gRenderer );
-	// }
-
-	// if(g3 == 1){
-	// 	gGaurdTexture->render( guards[3].first, guards[3].second, gRenderer );
-	// }
-
-	// if(g4 == 1){
-	// 	gGaurdTexture->render( guards[4].first, guards[4].second, gRenderer );
-	// }
-
-	// if(g5 == 1){
-	// 	gGaurdTexture->render( guards[5].first, guards[5].second, gRenderer );
-	// }
-
-	// if(g6 == 1){
-	// 	gGaurdTexture->render( guards[6].first, guards[6].second, gRenderer );
-	// }
-
 	if(flag == 2){
 		mainSelection->render( 0, 0, gRenderer);
 	}
@@ -325,33 +290,27 @@ void doRender(){
 			//Render background texture to screen
 			gBackgroundTexture->render( 0, 0, gRenderer);
 
-if(g0 == 1){
-		gGaurdTexture->render( guards[0].first, guards[0].second, gRenderer );
-	}
-
-	if(g1 == 1){
-		gGaurdTexture->render( guards[1].first, guards[1].second, gRenderer );
-	}
-
-	if(g2 == 1){
-		gGaurdTexture->render( guards[2].first, guards[2].second, gRenderer );
-	}
-
-	if(g3 == 1){
-		gGaurdTexture->render( guards[3].first, guards[3].second, gRenderer );
-	}
-
-	if(g4 == 1){
-		gGaurdTexture->render( guards[4].first, guards[4].second, gRenderer );
-	}
-
-	if(g5 == 1){
-		gGaurdTexture->render( guards[5].first, guards[5].second, gRenderer );
-	}
-
-	if(g6 == 1){
-		gGaurdTexture->render( guards[6].first, guards[6].second, gRenderer );
-	}
+			if(g0 == 1){
+				gGaurdTexture->render( guards[0].first, guards[0].second, gRenderer );
+			}
+			if(g1 == 1){
+				gGaurdTexture->render( guards[1].first, guards[1].second, gRenderer );
+			}
+			if(g2 == 1){
+				gGaurdTexture->render( guards[2].first, guards[2].second, gRenderer );
+			}
+			if(g3 == 1){
+				gGaurdTexture->render( guards[3].first, guards[3].second, gRenderer );
+			}
+			if(g4 == 1){
+				gGaurdTexture->render( guards[4].first, guards[4].second, gRenderer );
+			}
+			if(g5 == 1){
+				gGaurdTexture->render( guards[5].first, guards[5].second, gRenderer );
+			}
+			if(g6 == 1){
+				gGaurdTexture->render( guards[6].first, guards[6].second, gRenderer );
+			}
 
 			//Render dot
 			if(usr_id == 0) {
@@ -430,36 +389,27 @@ void randomLocation(){
 		r1 = rand()%33;
 	}
 
-	// g0=0, g1=0, g2=0, g3=0, g4=0, g5=0, g6=0;
-
-	// cout<<g0<<" ran g0\n";
-	// gaurdRen(0);
-	// cout<<g0<<" after ran g0\n";
-	// if(r1%2==0) gaurdRen(r1%7);
-
 	if(r1%2==0){
 		gaurdRen(r1%7);
-		cout<<"gaurd hai 1 "<<r1%7<<endl;
 	}
 	if(r1%3==0){
 		gaurdRen((r1/5)%7);
-		cout<<"gaurd hai 2 "<<((r1/5)%7)<<endl;
 	}
 	if(r1%5==0){
 		gaurdRen((r1/11)%7);
-		cout<<"gaurd hai 3 "<<((r1/11)%7)<<endl;
 	}
 
-	cout<<"in random  "<<g0<<" "<<g1<<" "<<g2<<" "<<g3<<" "<<g4<<" "<<g5<<" "<<g6;
-
-// in random location
+	//set rewards 
 	dot1->myReward = locRewards[r1];
 
+	//set destination positions
 	dot1->mDestX = locations[places[r1]].first;
 	dot1->mDestY = locations[places[r1]].second;
 
+	//time counters
 	c1=c2=0;
 
+	//Yulu off at start
 	dot1->mYOn = 0;
 }
 
@@ -498,6 +448,7 @@ void close()
 	IMG_Quit();
 	SDL_Quit();
 
+	//delete pointers
 	delete dot1;
 	delete dot1;
 	delete gGaurdTexture;
@@ -512,10 +463,13 @@ void close()
 	delete MainMusicTrack;
 	delete CoinCollect;
 
+	//close socket
 	close(msock);
 }
 
 int main( int argc, char* args[] ){
+
+	//for seeding
 	unsigned int time_ui = (unsigned int) time(NULL);
 
 	cout<<"Enter 0 for Server, 1 for client: \n";
@@ -580,14 +534,17 @@ int main( int argc, char* args[] ){
 			//While application is running
 			while( !quit ){
 
+				//check if game is ended
 				if(dot2->mScore < 1) 
 					if(los==0) won=1;
 				if(dot1->mScore < 1) 
 					if(won==0) los=1;
 				
+				//move the players
 				dot1->move(SCREEN_HEIGHT, SCREEN_WIDTH, usr_id, msock);
 				dot2->move_P2(usr_id, msock);
 
+				//check collision with gaurd
 				if(g0 == 1 && abs(guards[0].first - dot1->returnX()) < 13 &&  abs(guards[0].second - dot1->returnY()) < 13) {dot1->mScore -= 20; g0=0;}
 				if(g1 == 1 && abs(guards[1].first - dot1->returnX()) < 13 &&  abs(guards[1].second - dot1->returnY()) < 13) {dot1->mScore -= 20; g1=0;}
 				if(g2 == 1 && abs(guards[2].first - dot1->returnX()) < 13 &&  abs(guards[2].second - dot1->returnY()) < 13) {dot1->mScore -= 20; g2=0;}
@@ -596,44 +553,32 @@ int main( int argc, char* args[] ){
 				if(g5 == 1 && abs(guards[5].first - dot1->returnX()) < 13 &&  abs(guards[5].second - dot1->returnY()) < 13) {dot1->mScore -= 20; g5=0;}
 				if(g6 == 1 && abs(guards[6].first - dot1->returnX()) < 13 &&  abs(guards[6].second - dot1->returnY()) < 13) {dot1->mScore -= 20; g6=0;}
 
+				//wait till both players are ready
 				if(dot2->ready == 1 && dot1->ready == 1) {
 					c1++;
 					if(c1==45){
 						c1=0; c2++;
 						if(dot1->mDestReached == 0) dot1->mScore -= (2-dot1->mYOn);
-						// if(dot2->mDestReached == 0) dot2->mScore-=3;
 					}
 
+					//check if player reached destination
 					bool ch1 = dot1->checkDestReached();
 					if(ch1 == 1) {
 						CoinCollect->PlayMusic(1);
 					}
 
-					// bool ch2 = dot2->checkDestReached();
-
-					// cout<<"Dot1 reached->"<<dot1->mDestReached <<" "<<"Dot2 reached->"<<dot2->mDestReached<<"\n";
+					//if both players reached destinations
 					if(dot1->mDestReached == 1 && dot2->mDestReached == 1){
 
+						//show interval screen
 						dot1->intervalFlag = 1;
 						if(c3==0) c3 = 45*5;
 
 						dot1->sendPos(usr_id, msock);
 						dot2->getPos(usr_id, msock);
 
-
-						// doRender();
-
-						// intervalScreen->render( 0, 0, gRenderer);
-						// SDL_Delay(1000);
-						// interval = 0;
-
-
 						dot1->mDestReached = 0;
-
-						// randomLocation();
 					}
-					// dot1->sendPos(usr_id, msock);
-					// dot2->getPos(usr_id, msock);
 				}
 
 				//Clear screen
@@ -651,13 +596,14 @@ int main( int argc, char* args[] ){
 					if( e.type == SDL_QUIT )
 						quit = true;
 
+					//Handle input for start screen
 					mainEvent(e);
 
+					//Handle input for hostel selection screen
 					hostelEvent(e);
 
 					//Handle input for the dot
 					dot1->handleEvent( e );
-					// dot2->handleEventN( e );
 				}
 			}
 		}

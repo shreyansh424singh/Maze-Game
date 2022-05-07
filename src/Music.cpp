@@ -3,15 +3,13 @@
 #include <iostream>
 
 Music::Music(std::string musicfilepath){
-    // TODO: Could configure some options
-    // for our playback.
+
     if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024)==-1) {
         std::cout << "Audio library not working:" << Mix_GetError() << std::endl;;
     } 
 
     // Load our music file
     m_music= Mix_LoadMUS(musicfilepath.c_str());
-    // TODO: Have error checking here
 }
 
 Music::~Music(){

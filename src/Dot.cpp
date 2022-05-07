@@ -1,13 +1,11 @@
 #include "Dot.hpp"
 #include<bits/stdc++.h>
-#include "Music.hpp"
 
 using namespace std;
 
 
 Dot::Dot(){
-    //Initialize the offsets
-    // setInitialPosition(p);
+    //Initialize the variables
     ready = 0;
     myReward = 0;
     intervalFlag = 0;
@@ -23,9 +21,6 @@ Dot::Dot(){
     mDestX = 346;
     mDestY = 411;
 
-    // CoinCollect = new Music("./assets/Sounds/coin.wav");
-    // CoinCollect->SetupDevice();
-
 	//Set collision box dimension
 	mCollider.w = DOT_WIDTH;
 	mCollider.h = DOT_HEIGHT;
@@ -40,12 +35,13 @@ Dot::Dot(){
 		    backarr[i][j] = temp[j*1600+i];
 }
 
+//event handler
 void Dot::handleEvent( SDL_Event& e ){
 
+    //yulu on event
     if( e.type == SDL_KEYDOWN && mYulu > 0 && mYOn == 0){
 		if( e.key.keysym.sym == SDLK_y){
             mYOn = 1;
-            // DOT_VEL = 2;
             mYulu--;
         }
     }
@@ -74,15 +70,10 @@ void Dot::handleEvent( SDL_Event& e ){
             case SDLK_RIGHT: mVelX -= DOT_VEL; break;
         }
     }
-//      cout<< DOT_VEL<< "  2up " <<mVelY<<"\n";  
-//  cout<< DOT_VEL<<"  2down " <<mVelY<<"\n"; 
-//  cout<< DOT_VEL<<"  2left " <<mVelX<<"\n"; 
-//  cout<< DOT_VEL<<"  2right " <<mVelX<<"\n";
 }
 
+//move the player
 void Dot::move(int SCREEN_HEIGHT, int SCREEN_WIDTH, int usr_id, int sys_sock){
-
-// cout<<DOT_VEL<<" move here "<<mVelX << " x "<<mVelY<<" y\n";
 
     //Move the dot left or right
     mPosX += mVelX;
@@ -107,6 +98,8 @@ void Dot::move(int SCREEN_HEIGHT, int SCREEN_WIDTH, int usr_id, int sys_sock){
         mPosY -= mVelY;
 		mCollider.y = mPosY;
     }
+
+    //locs is sent through socket
     int* locs = new int(6);
 	locs[0] = mPosX;
 	locs[1] = mPosY;
@@ -122,6 +115,7 @@ void Dot::move(int SCREEN_HEIGHT, int SCREEN_WIDTH, int usr_id, int sys_sock){
 	}
 }
 
+//update position of player 2
 void Dot::move_P2(int usr_id, int sys_sock)
 {
 	int* locs = new int(6);
@@ -140,6 +134,7 @@ void Dot::move_P2(int usr_id, int sys_sock)
     intervalFlag = locs[5];
 }
 
+//
 void Dot::getPos(int usr_id, int sys_sock){
 
 	int* locs = new int(6);
@@ -158,7 +153,7 @@ void Dot::getPos(int usr_id, int sys_sock){
     intervalFlag = locs[5];
 }
 
-
+//
 void Dot::sendPos(int usr_id, int sys_sock)
 {
     int* locs = new int(6);
@@ -177,13 +172,13 @@ void Dot::sendPos(int usr_id, int sys_sock)
 	}
 }
 
-
-
+//render dot on window
 void Dot::render(LTexture* gDotTexture, SDL_Renderer*& gRenderer){
     //Show the dot
 	gDotTexture->render( mPosX, mPosY, gRenderer );
 }
 
+//check collision with road
 bool Dot::checkCollision( SDL_Rect a){
 
     //The sides of the rectangles
@@ -202,6 +197,7 @@ bool Dot::checkCollision( SDL_Rect a){
     midX = min((leftA + rightA)/2, 1599);
     midY = min((topA + bottomA)/2, 999);
 
+    //if collision return true
     if(backarr[midX][midY] == 1) return true;
     return false;
 }
@@ -224,6 +220,7 @@ void Dot::setInitialPosition(char p){
     }
 }
 
+//check if player reached destination
 bool Dot::checkDestReached(){
     if(abs(mDestX-mPosX) <= 15 && abs(mDestY-mPosY) <= 15){
 
@@ -233,11 +230,6 @@ bool Dot::checkDestReached(){
         return true;
     }
     return false;
-}
-
-void Dot::resetVel(){
-    mVelX=0;
-    mVelY=0;
 }
 
 int Dot::returnX(){

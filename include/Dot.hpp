@@ -47,13 +47,14 @@ class Dot
 		//Shows the dot on the screen
 		void render(LTexture* gDotTexture, SDL_Renderer*& gRenderer);
 
+		//check collision with road
         bool checkCollision( SDL_Rect a);
 
+		//set initial position as per initial position
 		void setInitialPosition(char p);
 
+		//check if player reached destination
 		bool checkDestReached();
-
-		void resetVel();
 
 		int returnX();
 		int returnY();

@@ -3,27 +3,22 @@
 
 using namespace std;
 
-LTexture::LTexture()
-{
-
+LTexture::LTexture(){
 	//Initialize
 	mTexture = NULL;
 	mWidth = 0;
 	mHeight = 0;
 }
 
-LTexture::~LTexture()
-{
+LTexture::~LTexture(){
 	//Deallocate
 	free();
 }
 
-bool LTexture::loadFromFile( std::string path, SDL_Renderer*& gRenderer )
-{
+bool LTexture::loadFromFile( std::string path, SDL_Renderer*& gRenderer ){
 
 	//Get rid of preexisting texture
 	free();
-
 
 	//The final texture
 	SDL_Texture* newTexture = NULL;
@@ -41,12 +36,10 @@ bool LTexture::loadFromFile( std::string path, SDL_Renderer*& gRenderer )
 
 		//Create texture from surface pixels
         newTexture = SDL_CreateTextureFromSurface( gRenderer, loadedSurface );
-		if( newTexture == NULL )
-		{
+		if( newTexture == NULL ){
 			printf( "Unable to create texture from %s! SDL Error: %s\n", path.c_str(), SDL_GetError() );
 		}
-		else
-		{
+		else{
 			//Get image dimensions
 			mWidth = loadedSurface->w;
 			mHeight = loadedSurface->h;
@@ -113,17 +106,4 @@ void LTexture::render( int x, int y, SDL_Renderer*& gRenderer, SDL_Rect* clip, d
 
 	//Render to screen
 	SDL_RenderCopyEx( gRenderer, mTexture, clip, &renderQuad, angle, center, flip );
-}
-
-int LTexture::getWidth()
-{
-
-
-	return mWidth;
-}
-
-int LTexture::getHeight()
-{
-
-	return mHeight;
 }

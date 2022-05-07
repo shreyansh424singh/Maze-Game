@@ -4,18 +4,14 @@
 using namespace std;
 
 // Initialize Static variables
-// Should be initialized to false by default
 bool DynamicText::s_ttfInitialized = false;
 
 // Constructor
-// example: "./assets/fonts/8bitOperatorPlus8-Regular.ttf"
 DynamicText::DynamicText(std::string fontfilepath, size_t fontSize){
-    // Just like when we initialize our graphics subsystem,
-    // we need to do the same for our font system.         	
+
     if(!s_ttfInitialized && TTF_Init() == -1){
         std::cout << "Could not initailize SDL2_ttf, error: " << TTF_GetError() << std::endl;
     }else{
-        // std::cout << "SDL2_ttf system ready to go!" << std::endl;
         // Initialize TTF system only once, even if
         // we have multipl Text objects.
         s_ttfInitialized = true;

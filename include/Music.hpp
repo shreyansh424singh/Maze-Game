@@ -9,9 +9,9 @@ class Music{
         // Destructor
         ~Music();
 
-		/// number of times to play the music
-		/// 0 means 0
-		/// -1 means plays forever.
+		// number of times to play the music
+		// 0 means 0
+		// -1 means plays forever.
 		void PlayMusic(int loops);
         // Pause the music
 		void PauseMusic();

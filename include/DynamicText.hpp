@@ -1,13 +1,4 @@
-#ifndef DYNAMICTEXT_HPP
-#define DYNAMICTEXT_HPP
-
-/*!
-	DynamicText objects can change, but they are more expensive
-	to use, because the textures are constantly recreated each frame.
-*/
-
 #include <SDL2/SDL.h>
-// The SDL2_ttf font library for drawing text
 #include <SDL2/SDL_ttf.h>
 #include<bits/stdc++.h>
 
@@ -36,7 +27,3 @@ class DynamicText{
 		static bool s_ttfInitialized;
 
 };
-
-
-
-#endif
