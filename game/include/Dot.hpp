@@ -36,7 +36,6 @@ class Dot
 
 		//Takes key presses and adjusts the dot's velocity
 		void handleEvent( SDL_Event& e );
-		void handleEventN( SDL_Event& e );
 
 		//Moves the dot and checks collision
 		void move(int SCREEN_HEIGHT, int SCREEN_WIDTH, int usr_id, int sys_sock);
@@ -54,7 +53,7 @@ class Dot
 
 		bool checkDestReached();
 
-		// void resetVel();
+		void resetVel();
 
     private:
 		//The X and Y offsets of the dot

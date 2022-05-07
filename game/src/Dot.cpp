@@ -38,7 +38,7 @@ void Dot::handleEvent( SDL_Event& e ){
     if( e.type == SDL_KEYDOWN && mYulu > 0){
 		if( e.key.keysym.sym == SDLK_y){
             mYOn = 1;
-            DOT_VEL = 2;
+            // DOT_VEL = 2;
             mYulu--;
         }
     }
@@ -49,10 +49,10 @@ void Dot::handleEvent( SDL_Event& e ){
         //Adjust the velocity
         switch( e.key.keysym.sym )
         {
-            case SDLK_UP: mVelY -= DOT_VEL; break;
-            case SDLK_DOWN: mVelY += DOT_VEL; break;
-            case SDLK_LEFT: mVelX -= DOT_VEL; break;
-            case SDLK_RIGHT: mVelX += DOT_VEL; break;
+            case SDLK_UP: mVelY -= DOT_VEL;    break;
+            case SDLK_DOWN: mVelY += DOT_VEL;  break;
+            case SDLK_LEFT: mVelX -= DOT_VEL;  break;
+            case SDLK_RIGHT: mVelX += DOT_VEL;  break;
         }
     }
     //If a key was released
@@ -61,43 +61,21 @@ void Dot::handleEvent( SDL_Event& e ){
         //Adjust the velocity
         switch( e.key.keysym.sym )
         {
-            case SDLK_UP: mVelY += DOT_VEL; break;
+            case SDLK_UP: mVelY += DOT_VEL;   break;
             case SDLK_DOWN: mVelY -= DOT_VEL; break;
             case SDLK_LEFT: mVelX += DOT_VEL; break;
             case SDLK_RIGHT: mVelX -= DOT_VEL; break;
         }
     }
-}
-
-void Dot::handleEventN( SDL_Event& e ){
-
-    //If a key was pressed
-	if( e.type == SDL_KEYDOWN && e.key.repeat == 0 )
-    {
-        //Adjust the velocity
-        switch( e.key.keysym.sym )
-        {
-            case SDLK_w: mVelY -= DOT_VEL; break;
-            case SDLK_s: mVelY += DOT_VEL; break;
-            case SDLK_a: mVelX -= DOT_VEL; break;
-            case SDLK_d: mVelX += DOT_VEL; break;
-        }
-    }
-    //If a key was released
-    else if( e.type == SDL_KEYUP && e.key.repeat == 0 )
-    {
-        //Adjust the velocity
-        switch( e.key.keysym.sym )
-        {
-            case SDLK_w: mVelY += DOT_VEL; break;
-            case SDLK_s: mVelY -= DOT_VEL; break;
-            case SDLK_a: mVelX += DOT_VEL; break;
-            case SDLK_d: mVelX -= DOT_VEL; break;
-        }
-    }
+//      cout<< DOT_VEL<< "  2up " <<mVelY<<"\n";  
+//  cout<< DOT_VEL<<"  2down " <<mVelY<<"\n"; 
+//  cout<< DOT_VEL<<"  2left " <<mVelX<<"\n"; 
+//  cout<< DOT_VEL<<"  2right " <<mVelX<<"\n";
 }
 
 void Dot::move(int SCREEN_HEIGHT, int SCREEN_WIDTH, int usr_id, int sys_sock){
+
+// cout<<DOT_VEL<<" move here "<<mVelX << " x "<<mVelY<<" y\n";
 
     //Move the dot left or right
     mPosX += mVelX;
@@ -245,4 +223,9 @@ bool Dot::checkDestReached(){
         return true;
     }
     return false;
+}
+
+void Dot::resetVel(){
+    mVelX=0;
+    mVelY=0;
 }
