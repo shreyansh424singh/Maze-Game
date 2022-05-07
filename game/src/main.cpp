@@ -69,6 +69,7 @@ Dot* dot1;
 Dot* dot2;
 
 Music* MainMusicTrack;
+Music* CoinCollect;
 // Sound* CoinCollect;
 
 //Starts up SDL and creates window
@@ -352,6 +353,8 @@ void assign(){
 void randomLocation(){
 	r1 = rand()%33;
 
+	MainMusicTrack->PlayMusic(-1);
+
 	//new destination should not be same as old destination
 	while(dot1->mDestX == locations[places[r1]].first && dot1->mDestY == locations[places[r1]].second 
 	   && abs(dot1->returnX() - locations[places[r1]].first) <= 50 && abs(dot1->returnY() - locations[places[r1]].second) <= 50 ) {
@@ -403,7 +406,7 @@ void close()
 	delete lostScreen;
 	delete wonScreen;
 	delete MainMusicTrack;
-	// delete CoinCollect;
+	delete CoinCollect;
 
 	close(msock);
 }
@@ -433,9 +436,9 @@ int main( int argc, char* args[] ){
 
 	MainMusicTrack = new Music("./assets/Sounds/backsound1.mp3");
 	MainMusicTrack->SetVolume(39);
-	MainMusicTrack->PlayMusic(-1);
-
-	// CoinCollect = new Sound("./assets/Sounds/coin.mp3");
+	// MainMusicTrack->PlayMusic(-1);
+	
+	CoinCollect = new Music("./assets/Sounds/coin.wav");
 
 	gBackgroundTexture = new LTexture();
 	gDotTexture = new LTexture();
@@ -489,6 +492,10 @@ int main( int argc, char* args[] ){
 					}
 
 					bool ch1 = dot1->checkDestReached();
+					if(ch1 == 1) {
+						CoinCollect->PlayMusic(1);
+					}
+
 					// bool ch2 = dot2->checkDestReached();
 
 					// cout<<"Dot1 reached->"<<dot1->mDestReached <<" "<<"Dot2 reached->"<<dot2->mDestReached<<"\n";
