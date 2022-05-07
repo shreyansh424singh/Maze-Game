@@ -11,7 +11,7 @@ Dot::Dot(){
     mPosX = 540;
     mPosY = 105;
 
-    mScore = 100;
+    mScore = 200;
     mYulu = 3;
 
     mDestReached = 0;
