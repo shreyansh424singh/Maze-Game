@@ -16,6 +16,7 @@ using namespace std;
 
 int usr_id, msock;
 int c1, c2, r1;
+int interval=0, won=0, los=0;
 
 map<string, pair<int, int>> locations;
 string places[33] = {	"Jwalamukhi        ",
@@ -254,36 +255,48 @@ void doRender(){
 	}
 
 	if(flag == 0){
-		//Render background texture to screen
-		gBackgroundTexture->render( 0, 0, gRenderer);
 
-		//Render dot
-		if(usr_id == 0) {
-			dot1->render(gDotTexture, gRenderer);
-			dot2->render(gDotTexture1, gRenderer);
-		} else {
-			dot1->render(gDotTexture1, gRenderer);
-			dot2->render(gDotTexture, gRenderer);
+		if(won == 1){
+			wonScreen->render( 0, 0, gRenderer);
 		}
+		else if(los == 1){
+			lostScreen->render( 0, 0, gRenderer);
+		}
+		else if(interval == 1){
+			intervalScreen->render( 0, 0, gRenderer);
+		}
+		else{
+			//Render background texture to screen
+			gBackgroundTexture->render( 0, 0, gRenderer);
 
-		//Render Text
-		DynamicText text("./assets/fonts/alba.ttf",32);
-		
-		if(dot1->mYOn == 1)  text.DrawText(gRenderer,"Yulu Activated",575,632,240,100);
-		text.DrawText(gRenderer,"Destination : ",575,702,200,100);
-		text.DrawText(gRenderer,places[r1],780,702,300,100);
-		text.DrawText(gRenderer,"Time : ",575,772,150,100);
-		text.DrawText(gRenderer,to_string(c2),715,782,60,85);
-		text.DrawText(gRenderer,"Yulu Left : ",855,772,180,100);
-		text.DrawText(gRenderer,to_string(dot1->mYulu),1035,782,40,85);
-		// if(dot1->mDestReached == 1 && dot2->mDestReached == 0) text.DrawText(gRenderer,"You Reached",575,892,200,100);
-		if(dot1->mDestReached == 1) text.DrawText(gRenderer,"You Reached",575,892,200,100);
-		// if(dot1->mDestReached == 0 && dot2->mDestReached == 1) text.DrawText(gRenderer,"Opponent Reached",575,892,200,100);
-		if(dot2->mDestReached == 1) text.DrawText(gRenderer,"Opponent Reached",775,892,200,100);
-		text.DrawText(gRenderer,"Your Score : ",1200,697,200,100);
-		text.DrawText(gRenderer,to_string(dot1->mScore),1270,757,60,100);
-		text.DrawText(gRenderer,"Opponent Score : ",1200,827,200,100);
-		text.DrawText(gRenderer,to_string(dot2->mScore),1270,892,60,100);
+			//Render dot
+			if(usr_id == 0) {
+				dot1->render(gDotTexture, gRenderer);
+				dot2->render(gDotTexture1, gRenderer);
+			} else {
+				dot1->render(gDotTexture1, gRenderer);
+				dot2->render(gDotTexture, gRenderer);
+			}
+
+			//Render Text
+			DynamicText text("./assets/fonts/alba.ttf",32);
+			
+			if(dot1->mYOn == 1)  text.DrawText(gRenderer,"Yulu Activated",575,632,240,100);
+			text.DrawText(gRenderer,"Destination : ",575,702,200,100);
+			text.DrawText(gRenderer,places[r1],780,702,300,100);
+			text.DrawText(gRenderer,"Time : ",575,772,150,100);
+			text.DrawText(gRenderer,to_string(c2),715,782,60,85);
+			text.DrawText(gRenderer,"Yulu Left : ",855,772,180,100);
+			text.DrawText(gRenderer,to_string(dot1->mYulu),1035,782,40,85);
+			// if(dot1->mDestReached == 1 && dot2->mDestReached == 0) text.DrawText(gRenderer,"You Reached",575,892,200,100);
+			if(dot1->mDestReached == 1) text.DrawText(gRenderer,"You Reached",575,892,200,100);
+			// if(dot1->mDestReached == 0 && dot2->mDestReached == 1) text.DrawText(gRenderer,"Opponent Reached",575,892,200,100);
+			if(dot2->mDestReached == 1) text.DrawText(gRenderer,"Opponent Reached",775,892,200,100);
+			text.DrawText(gRenderer,"Your Score : ",1200,697,200,100);
+			text.DrawText(gRenderer,to_string(dot1->mScore),1270,757,60,100);
+			text.DrawText(gRenderer,"Opponent Score : ",1200,827,200,100);
+			text.DrawText(gRenderer,to_string(dot2->mScore),1270,892,60,100);
+		}
 	}
 
 }
@@ -449,15 +462,17 @@ int main( int argc, char* args[] ){
 
 				if(dot2->mScore < 1) {
 					cout<<"You won!\n";
-					wonScreen->render( 0, 0, gRenderer);
-					SDL_Delay(5000);
-					break;
+					if(los==0) won=1;
+					// wonScreen->render( 0, 0, gRenderer);
+					// SDL_Delay(5000);
+					// break;
 				}
 				if(dot1->mScore < 1) {
 					cout<<"You lost!\n";
-					lostScreen->render( 0, 0, gRenderer);
-					SDL_Delay(5000);
-					break;
+					if(won==0) los=1;
+					// lostScreen->render( 0, 0, gRenderer);
+					// SDL_Delay(5000);
+					// break;
 				}
 				
 				dot1->move(SCREEN_HEIGHT, SCREEN_WIDTH, usr_id, msock);
@@ -492,10 +507,12 @@ int main( int argc, char* args[] ){
 						// SDL_RenderClear( gRenderer );
 
 						intervalScreen->render( 0, 0, gRenderer);
+						interval = 1;
 	//add delay and some music/image
 						cout<<"Both reached\n";
 						SDL_Delay(5000);
 						intervalScreen->free();
+						interval = 0;
 
 
 						dot1->mDestReached = 0;
