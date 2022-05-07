@@ -13,12 +13,17 @@
 #include<bits/stdc++.h>
 
 using namespace std;
+using namespace std::chrono_literals;
 
 int usr_id, msock;
-int c1, c2, r1;
+int c1, c2, c3=0, r1;
 int interval=0, won=0, los=0;
+chrono::steady_clock::time_point t_begin , t_end;
 
 map<string, pair<int, int>> locations;
+
+int locRewards[33] = {5, 5, 5, 4, 5, 5, 6, 7, 5, 6, 5, 4, 5, 4, 5, 5, 5, 5, 8, 8, 8, 8, 6, 7, 7, 6, 8, 6, 8, 5, 5, 9, 10};
+
 string places[33] = {	"Jwalamukhi        ",
 						"Kumaon            ",
 						"Aravali           ",
@@ -263,7 +268,16 @@ void doRender(){
 			lostScreen->render( 0, 0, gRenderer);
 		}
 		else if(interval == 1){
+			cout<<"bhaiya\n";
 			intervalScreen->render( 0, 0, gRenderer);
+			this_thread::sleep_for(5000ms);
+			// t_end = chrono::steady_clock::now();
+			// cout<<chrono::duration_cast<std::chrono::microseconds>(t_end - t_begin).count()<<"\n";
+			// if(chrono::duration_cast<std::chrono::microseconds>(t_end - t_begin).count() == 2000){
+				cout<<"op bolte\n";
+				randomLocation();
+				interval = 0;
+			// }
 		}
 		else{
 			//Render background texture to screen
@@ -342,11 +356,15 @@ void randomLocation(){
 
 	//new destination should not be same as old destination
 	// if(dot1->mDestX == locations[places[r1]].first && dot1->mDestY == locations[places[r1]].second) r1 = (r1*2)%33;
-		cout<<"New loc chahiye"<<r1<<"\n";
+		// cout<<"New loc chahiye"<<r1<<"\n";
 	if(dot1->mDestX == locations[places[r1]].first && dot1->mDestY == locations[places[r1]].second) {
-		cout<<"Same aagya\n";
+		// cout<<"Same aagya\n";
 		r1 = rand()%33;
 	}
+
+
+// in random location
+	dot1->myReward = locRewards[r1];
 
 	dot1->mDestX = locations[places[r1]].first;
 	dot1->mDestY = locations[places[r1]].second;
@@ -460,20 +478,10 @@ int main( int argc, char* args[] ){
 			//While application is running
 			while( !quit ){
 
-				if(dot2->mScore < 1) {
-					cout<<"You won!\n";
+				if(dot2->mScore < 1) 
 					if(los==0) won=1;
-					// wonScreen->render( 0, 0, gRenderer);
-					// SDL_Delay(5000);
-					// break;
-				}
-				if(dot1->mScore < 1) {
-					cout<<"You lost!\n";
+				if(dot1->mScore < 1) 
 					if(won==0) los=1;
-					// lostScreen->render( 0, 0, gRenderer);
-					// SDL_Delay(5000);
-					// break;
-				}
 				
 				dot1->move(SCREEN_HEIGHT, SCREEN_WIDTH, usr_id, msock);
 				dot2->move_P2(usr_id, msock);
@@ -481,7 +489,7 @@ int main( int argc, char* args[] ){
 				if(dot2->ready == 1 && dot1->ready == 1) {
 					c1++;
 					if(c1==45){
-						c1=0; c2++;
+						c1=0; c2++; c3++;
 						if(dot1->mDestReached == 0) dot1->mScore -= (2-dot1->mYOn);
 						// if(dot2->mDestReached == 0) dot2->mScore-=3;
 					}
@@ -491,34 +499,23 @@ int main( int argc, char* args[] ){
 
 					// cout<<"Dot1 reached->"<<dot1->mDestReached <<" "<<"Dot2 reached->"<<dot2->mDestReached<<"\n";
 					if(dot1->mDestReached == 1 && dot2->mDestReached == 1){
+
+						interval = 1;
+
 						dot1->sendPos(usr_id, msock);
 						dot2->getPos(usr_id, msock);
 
 
-		// //Render Text
-		// DynamicText text("./assets/fonts/alba.ttf",32);
+						// doRender();
 
-		// 				if(dot1->mDestReached == 1) text.DrawText(gRenderer,"You Reached",575,892,200,100);
-		// 				if(dot2->mDestReached == 1) text.DrawText(gRenderer,"Opponent Reached",775,892,200,100);
-// CoinCollect->PlaySound();
-
-						cout<<"Both reached\n";
-						// SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
-						// SDL_RenderClear( gRenderer );
-
-						intervalScreen->render( 0, 0, gRenderer);
-						interval = 1;
-	//add delay and some music/image
-						cout<<"Both reached\n";
-						SDL_Delay(5000);
-						intervalScreen->free();
-						interval = 0;
+						// intervalScreen->render( 0, 0, gRenderer);
+						// SDL_Delay(5000);
+						// interval = 0;
 
 
 						dot1->mDestReached = 0;
-						// dot2->mDestReached = 0;
 
-						randomLocation();
+						// randomLocation();
 					}
 					dot1->sendPos(usr_id, msock);
 					dot2->getPos(usr_id, msock);
