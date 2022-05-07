@@ -1,7 +1,10 @@
 #include "Dot.hpp"
 #include<bits/stdc++.h>
+#include "Sound.hpp"
 
 using namespace std;
+
+Sound* CoinCollect;
 
 Dot::Dot(){
     //Initialize the offsets
@@ -18,6 +21,9 @@ Dot::Dot(){
     mYOn = 0;
     mDestX = 346;
     mDestY = 411;
+
+    CoinCollect = new Sound("./assets/Sounds/coin.wav");
+    // CoinCollect->SetupDevice();
 
 	//Set collision box dimension
 	mCollider.w = DOT_WIDTH;
@@ -217,6 +223,9 @@ bool Dot::checkDestReached(){
     if(abs(mDestX-mPosX) <= 15 && abs(mDestY-mPosY) <= 15){
 
 //play sound
+
+CoinCollect->PlaySound();
+
 //add bonus points
         //make reached = 1 
         mDestReached = 1;

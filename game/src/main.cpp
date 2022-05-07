@@ -6,6 +6,7 @@
 
 #include "Dot.hpp"
 #include "Music.hpp"
+// #include "Sound.hpp"
 #include "DynamicText.hpp"
 // #include "LTexture.hpp"
 
@@ -62,6 +63,7 @@ Dot* dot1;
 Dot* dot2;
 
 Music* MainMusicTrack;
+// Sound* CoinCollect;
 
 //Starts up SDL and creates window
 bool init();
@@ -277,7 +279,7 @@ void doRender(){
 		// if(dot1->mDestReached == 1 && dot2->mDestReached == 0) text.DrawText(gRenderer,"You Reached",575,892,200,100);
 		if(dot1->mDestReached == 1) text.DrawText(gRenderer,"You Reached",575,892,200,100);
 		// if(dot1->mDestReached == 0 && dot2->mDestReached == 1) text.DrawText(gRenderer,"Opponent Reached",575,892,200,100);
-		if(dot2->mDestReached == 1) text.DrawText(gRenderer,"Opponent Reached",575,892,200,100);
+		if(dot2->mDestReached == 1) text.DrawText(gRenderer,"Opponent Reached",775,892,200,100);
 		text.DrawText(gRenderer,"Your Score : ",1200,697,200,100);
 		text.DrawText(gRenderer,to_string(dot1->mScore),1270,757,60,100);
 		text.DrawText(gRenderer,"Opponent Score : ",1200,827,200,100);
@@ -376,6 +378,7 @@ void close()
 	delete lostScreen;
 	delete wonScreen;
 	delete MainMusicTrack;
+	// delete CoinCollect;
 
 	close(msock);
 }
@@ -404,7 +407,10 @@ int main( int argc, char* args[] ){
 	dot2 = new Dot();
 
 	MainMusicTrack = new Music("./assets/Sounds/backsound1.mp3");
+	MainMusicTrack->SetVolume(39);
 	MainMusicTrack->PlayMusic(-1);
+
+	// CoinCollect = new Sound("./assets/Sounds/coin.mp3");
 
 	gBackgroundTexture = new LTexture();
 	gDotTexture = new LTexture();
@@ -470,6 +476,9 @@ int main( int argc, char* args[] ){
 
 					// cout<<"Dot1 reached->"<<dot1->mDestReached <<" "<<"Dot2 reached->"<<dot2->mDestReached<<"\n";
 					if(dot1->mDestReached == 1 && dot2->mDestReached == 1){
+
+// CoinCollect->PlaySound();
+
 						cout<<"Both reached\n";
 						// SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
 						// SDL_RenderClear( gRenderer );
